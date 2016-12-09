@@ -1,0 +1,62 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <form class="form-horizontal" role="form" action="{:U(CONTROLLER_NAME.'/operation')}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <textarea style="height:5em;" name="sql" required="required" class="form-control" placeholder="{$Think.lang.input_sql_here}">{$sql|htmlspecialchars}</textarea>
+            </div>
+            <div class="col-md-1">
+                <button style="height:5em;" type="submit" class="btn btn-primary btn-block">{$Think.lang.submit}</button>
+            </div>
+            <div class="col-md-5">
+                <div style="word-wrap:normal">
+                    可用数据表：<br />
+                    <foreach name="tables" item="v">
+                        {$v} <br />
+                    </foreach>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <?php if(IS_POST){ ?>
+        <div class="row" style="margin-top:2em;">
+            <div class="col-md-12">
+                <div class="well">
+                    <?php if($is_select){ ?>
+                        <?php if(!is_array($data_records)){ ?>
+                            <p class="text-danger">{$Think.lang.error_sql}</p>
+                        <?php }else{ ?>
+                            <if condition="$no_record">
+                                <p class="text-warning">{$Think.lang.no_record}</p>
+                            <else />
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <foreach name="data_fields" item="v">
+                                            <th>{$v}</th>
+                                        </foreach>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <foreach name="data_records" item="v">
+                                        <tr>
+                                            <foreach name="v" item="vv">
+                                                <td>{$vv}</td>
+                                            </foreach>
+                                        </tr>
+                                    </foreach>
+                                    </tbody>
+                                </table>
+                            </if>
+                        <?php } ?>
+                    <?php }else{ ?>
+                        <p class="text-warning">{$Think.lang.affect_rows} {$affect_row}</p>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+</block>

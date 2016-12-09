@@ -1,0 +1,32 @@
+<header>
+
+    <div class="container">
+        <nav class="navbar" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#menu-main">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="__ROOT__/<?php echo tpx_config_get('image_logo', 'asserts/res/image/logo.png'); ?>"/></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="menu-main">
+                    <ul class="nav navbar-nav">
+                        <li <if condition="CONTROLLER_NAME eq 'Index'">class="active"</if>><a href="__ROOT__/">公司首页</a></li>
+                        <li <if condition="CONTROLLER_NAME eq 'Product'">class="active"</if>><a href="{:U('/Product')}">产品中心</a></li>
+                        <li <if condition="CONTROLLER_NAME eq 'News'">class="active"</if>><a href="{:U('/News')}">新闻动态</a></li>
+                        <?php foreach(D('SinglePage','Service')->all(3600,array('where'=>array('show_in_nav'=>1))) as $v){ ?>
+                        <li <if condition="CONTROLLER_NAME eq ucwords($v['url'])">class="active"</if>><a href="{:U('/'.ucwords($v['url']))}">{$v.title}</a></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+
+</header>

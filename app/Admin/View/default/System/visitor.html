@@ -1,0 +1,29 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>IP</th>
+            <th>visitors</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="visitor_ips" item="v">
+            <tr>
+                <td>{$v.v_ip|long2ip}</td>
+                <td>{$v.cnt}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function admin_mod_build(mod){
+            var url = "{:U('Mod-controller-/build')}";
+            url = url.replace('-controller-',mod);
+            $.post(url,{},$.defaultFormCallback);
+        }
+    </script>
+
+</block>

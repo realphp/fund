@@ -1,0 +1,15 @@
+<div class="box-mod-list">
+    <h2>
+        <a class="right" href="{:U('/News')}">更多</a>
+        新闻动态
+    </h2>
+
+    <div class="list">
+        <?php foreach(D('News','Service')->latest() as $v){ ?>
+        <div class="item">
+            <span>{$v.posttime|date='Y-m-d',###}</span>
+            <a href="{:U('/News/'.$v['id'])}">{$v.title|htmlspecialchars}</a>
+        </div>
+        <?php } ?>
+    </div>
+</div>

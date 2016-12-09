@@ -1,0 +1,45 @@
+<extend name="Public/frame"/>
+<block name="page_body">
+
+    <include file="Public/header"/>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 about-left" style="padding:0px;">
+                <div class="about-title">
+                    <h3>最新资讯</h3>
+                    <em></em>
+                    <h4><a href="{:U('/News')}" class="active2">新闻动态</a></h4>
+                    <h4><a href="{:U('/Articles')}">我们在行动</a></h4>
+                    <h4><a href="{:U('/Album')}">相册</a></h4>
+                </div>
+                <include file="Public/donate-left"/>
+            </div>
+
+            <div class="col-md-10 about-desc">
+                <h2>联系我们</h2>
+                <hr>
+
+                <div class="box-page-main">
+                    <h1>
+                        {$data_news.title}
+                    </h1>
+                    <div class="attr">
+                        发布时间：{$data_news.posttime|date='Y-m-d H:i',###}
+                    </div>
+                    <div class="main">
+                        {$data_news.content}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <include file="Public/footer"/>
+    \
+</block>
+
+

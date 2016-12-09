@@ -1,0 +1,72 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <table id="table-grid" class="table table-hover">
+        <thead>
+            <tr>
+                <th data-column-id="id" data-order="asc" data-type="numeric" data-identifier="true">ID</th>
+                <th data-column-id="username" data-sortable="false">{$Think.lang.username}</th>
+                <th data-column-id="last_login_time" data-sortable="false">{$Think.lang.last_login_time}</th>
+                <th data-column-id="last_login_ip" data-sortable="false">{$Think.lang.last_login_ip}</th>
+                <th data-column-id="roles" data-sortable="false">{$Think.lang.role}</th>
+                <th data-column-id="status" data-formatter="status" data-sortable="false">{$Think.lang.status}</th>
+                <if condition="access_permit('userhandle')">
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">{$Think.lang.operation}</th>
+                </if>
+            </tr>
+        </thead>
+    </table>
+
+    <script type="text/javascript">
+    var grid;
+    /*<if condition="access_permit('userhandle')">*/
+    var grid_buttons = ['<div class="btn-group">',
+        '<a href="{:U(CONTROLLER_NAME.'/userhandle?action=add')}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>',
+        '<a href="javascript:void(0);" onclick="admin_grid_delete(\'{:U(CONTROLLER_NAME.'/userhandle?action=delete')}\');" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>',
+        '</div>'].join('');
+    /*<else />*/
+    var grid_buttons = '';
+    /*</if>*/
+
+    require(['jquery.bootgrid'],function(){
+        grid = $("#table-grid").bootgrid({
+            <include file="Public:jstablelist" />
+            url: "{:U(CONTROLLER_NAME.'/userlist')}",
+
+            formatters: {
+                commands: function(col, row){
+                    if(row.id=='1'){
+                        return '&nbsp;';
+                    }
+                    return "<a href='#' class='command-edit' title='{$Think.lang.edit}' data-row-id='" + row[this.identifier] + "'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<a href='#' class='command-delete' title='{$Think.lang.delete}' data-row-id='" + row[this.identifier] + "'><span class='glyphicon glyphicon-remove'></span></a>";
+                },
+
+                status:function(col,row){
+                    if(row.status=='1'){
+                        return '{$Think.lang.status_normal}';
+                    }
+                    return '{$Think.lang.status_forbidden}';
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid", function(){
+
+            grid.find(".command-edit").on("click", function(e){
+
+                $.redirect( "{:U('Administrator/userhandle?action=edit&id=-id-')}".replace('-id-', $(this).data("row-id") ));
+                return false;
+
+            }).end().find(".command-delete").on("click", function(e){
+
+                if(confirm('{$Think.lang.delete}?')){
+                    admin_grid_delete_one( "{:U('Administrator/userhandle?action=delete')}", $(this).data("row-id"));
+                }
+                return false;
+
+            });
+        });
+    });
+
+    </script>
+
+</block>

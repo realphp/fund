@@ -1,0 +1,69 @@
+<extend name="Public/frame"/>
+<block name="page_body">
+
+
+    <include file="Public/header"/>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+
+                <div class="box-mod-list">
+                    <h2>
+                        产品分类
+                    </h2>
+
+                    <div class="list">
+                        <?php foreach(D('Product','Service')->catlist() as $v){ ?>
+                        <div class="item item-block">
+                            <a href="{:U('/Product/page?cat='.$v['id'])}">{$v.catname|htmlspecialchars}</a>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-9">
+
+
+                <div class="box-product-list">
+                    <h1>
+                        <if condition="$cat_data">
+                            <a href="{:U('/Product')}">全部产品</a> &gt; {$data_title}
+                        <else />
+                            全部产品
+                        </if>
+                    </h1>
+                    <div class="main">
+                        <div class="row">
+                            <foreach name="data_list" item="v">
+                                <div class="col-md-3 col-xs-6">
+                                    <div class="item">
+                                        <a class="cover" href="{:U('/Product/'.$v['id'])}">
+                                            <img src="__ROOT__/{$v.cover}" alt="{$v.title|htmlspecialchars}" />
+                                        </a>
+                                        <a class="title" href="{:U('/Product/'.$v['id'])}">{$v.title|htmlspecialchars}</a>
+                                    </div>
+                                </div>
+                            </foreach>
+                        </div>
+                    </div>
+                    <div class="page-bar">
+                        {$data_page}
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <include file="Public/footer"/>
+
+
+</block>

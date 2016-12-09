@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>友情链接 &gt; 友情链接管理

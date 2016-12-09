@@ -1,0 +1,133 @@
+<extend name="Public/frame" />
+<block name="page-sub-nav">
+    <button onclick="clean_file_check(this);">{$Think.lang.clean_file_check}</button>
+    <button id="clean_file_xs_btn" style="display:none;" onclick="clean_file_xs();">删除选中文件</button>
+</block>
+<block name="content-box">
+
+    <script type="text/javascript">
+    $(function(){
+        $('.ids-all').on('change',function(){
+            $('.ids').prop('checked', $(this).is(':checked'));
+        });
+    });
+    function clean_file_xs(){
+        var ids = [];
+        $('.ids').each(function(i,o){
+           if($(o).is(':checked')){
+               ids.push($(o).val());
+           }
+        });
+        if(!ids.length){
+            $.dialog.alert('请选择要删除的文件');
+            return;
+        }
+        $.post("{:U('System/clean?action=file_delete_xs')}",{ids:ids.join(',')},function(data){
+            if(data.ok){
+                for(var i =0; i<ids.length; i++){
+                    $('.row-'+ids[i]).slideUp();
+                }
+            }else{
+                $.dialog.alert(data.data);
+            }
+        });
+    }
+    function clean_file_x(id){
+        $.post("{:U('System/clean?action=file_delete_xs')}",{ids:id},function(data){
+            if(data.ok){
+                $('.row-'+id).slideUp();
+            }else{
+                $.dialog.alert(data.data);
+            }
+        });
+    }
+    function clean_file_check(o){
+        $(o).prop('disabled',true);
+        var old_text = $(o).html();
+        $(o).html('{$Think.lang.clean_file_checking}');
+        $('#clean_file_xs_btn').hide();
+        $('#table-body').html('<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>');
+        $.post("{:U('System/clean?action=file')}",{},function(data){
+            if(data.ok){
+                var tables = data.data;
+                if(tables.length>0){
+                    var check_x_i = 0;
+                    var check_x = function(){
+                        if(check_x_i<tables.length){
+                            var table = tables[check_x_i++];
+                            $(o).html('{$Think.lang.clean_file_check_x}'+table+'...');
+                            $.post("{:U('System/clean?action=file_find_res')}",{table:table},function(data){
+                                if(data.ok){
+                                    setTimeout(check_x,1000);
+                                }else{
+                                    $.dialog.alert(data.data);
+                                    $(o).html(old_text);
+                                    $(o).prop('disabled',false);
+                                }
+                            });
+                        }else{
+                            $.post("{:U('System/clean?action=file_filter_res')}",{},function(data){
+                                if(data.ok){
+                                    if(data.data.length>0){
+                                        var files = data.data;
+                                        $('#table-body').html('');
+                                        $('#clean_file_xs_btn').show();
+                                        for(var i=0; i<files.length; ++i){
+                                            $('#table-body').append(
+                                                    '<tr class="row-'+files[i].id+'"> ' +
+                                                            ' <td><input type="checkbox" class="ids" value="'+files[i].id+'" /> '+files[i].id+'</td> ' +
+                                                            ' <td>'+files[i].uptime+'</td> ' +
+                                                            ' <td>'+files[i].name+'</td> ' +
+                                                            ' <td> ' +
+                                                                ' <a href="__ROOT__/data/'+files[i].name+'" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                                                                ' <a href="javascript:void(0);" onclick="clean_file_x('+files[i].id+')"><span class="glyphicon glyphicon-remove"></span></a> ' +
+                                                            ' </td> ' +
+                                                    ' </tr>');
+                                        }
+                                    }else{
+                                        $.dialog.alert('没有需要清除的文件');
+                                    }
+                                }else{
+                                    $.dialog.alert(data.data);
+                                }
+                                $(o).html(old_text);
+                                $(o).prop('disabled',false);
+                            });
+                        }
+                    };
+                    check_x();
+                }else{
+                    $(o).html(old_text);
+                    $(o).prop('disabled',false);
+                }
+            }else{
+                $.dialog.alert(data.data);
+                $(o).html(old_text);
+                $(o).prop('disabled',false);
+            }
+        });
+    }
+    </script>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th><input type="checkbox" class="ids-all" /> ID</th>
+            <th>{$Think.lang.uptime}</th>
+            <th>{$Think.lang.name}</th>
+            <th>{$Think.lang.operation}</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function admin_mod_build(mod){
+            var url = "{:U('Mod-controller-/build')}";
+            url = url.replace('-controller-',mod);
+            $.post(url,{},$.defaultFormCallback);
+        }
+    </script>
+
+</block>

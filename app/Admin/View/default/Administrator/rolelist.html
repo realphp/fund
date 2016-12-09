@@ -1,0 +1,65 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <table id="table-grid" class="table table-hover">
+        <thead>
+            <tr>
+                <th data-column-id="id" data-order="asc" data-type="numeric" data-identifier="true">ID</th>
+                <th data-column-id="name" data-sortable="false">{$Think.lang.role_name}</th>
+                <th data-column-id="status" data-formatter="status" data-sortable="false">{$Think.lang.role_status}</th>
+                <if condition="access_permit('rolehandle')">
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">{$Think.lang.operation}</th>
+                </if>
+            </tr>
+        </thead>
+    </table>
+
+    <script type="text/javascript">
+    var grid;
+    /*<if condition="access_permit('rolehandle')">*/
+    var grid_buttons = ['<div class="btn-group">',
+        '<a href="{:U('Administrator/rolehandle?action=add')}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>',
+        '<a href="javascript:void(0);" onclick="admin_grid_delete(\'{:U('Administrator/rolehandle?action=delete')}\');" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>',
+    '</div>'].join('');
+    /*<else />*/
+    var grid_buttons = '';
+    /*</if>*/
+
+    require(['jquery.bootgrid'],function(){
+        grid = $("#table-grid").bootgrid({
+            <include file="Public:jstablelist" />
+            url: "{:U('Administrator/rolelist')}",
+
+            formatters: {
+                commands: function(col, row){
+                    return "<a href='#' class='command-edit' title='{$Think.lang.edit}' data-row-id='" + row[this.identifier] + "'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<a href='#' class='command-delete' title='{$Think.lang.delete}' data-row-id='" + row[this.identifier] + "'><span class='glyphicon glyphicon-remove'></span></a>";
+                },
+                status:function(col,row){
+                    if(row.status==1){
+                        return '{$Think.lang.status_normal}';
+                    }
+                    return '{$Think.lang.status_forbidden}';
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid", function(){
+
+            grid.find(".command-edit").on("click", function(e){
+
+                $.redirect( "{:U('Administrator/rolehandle?action=edit&id=-id-')}".replace('-id-', $(this).data("row-id") ));
+                return false;
+
+            }).end().find(".command-delete").on("click", function(e){
+
+                if(confirm('{$Think.lang.delete}?')){
+                    admin_grid_delete_one( "{:U('Administrator/rolehandle?action=delete')}", $(this).data("row-id"));
+                }
+                return false;
+
+            });
+        });
+    });
+
+    </script>
+
+</block>

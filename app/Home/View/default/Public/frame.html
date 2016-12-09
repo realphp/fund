@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <include file="Common@Common/watcher_js" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="{$page_keywords}" />
+    <meta name="description" content="{$page_description}" />
+    <meta name="generator" content="Co.MZ V{$Think.const.APP_VERSION}" />
+    <meta name="author" content="Co.MZ TecMZ" />
+    <meta name="copyright" content="2015 TecMZ Inc." />
+    <link rel="icon" href="__ASSERTS__/res/fav.ico?{$Think.const.STATIC_RES_HASH}" type="image/x-icon" />
+    <link rel="shortcut icon" href="__ASSERTS__/res/fav.ico?{$Think.const.STATIC_RES_HASH}" type="image/x-icon" />
+    <title>{$page_title}</title>
+    <link rel="stylesheet" type="text/css" href="__ASSERTS__/bootstrap/css/bootstrap.yeti.min.css?{$Think.const.STATIC_RES_HASH}" />
+    <!--<link rel="stylesheet" type="text/css" href="__ASSERTS__/res/style-<?php echo tpx_config_get('theme_color','xxx'); ?>.css?{$Think.const.STATIC_RES_HASH}" />-->
+    <link rel="stylesheet" type="text/css" href="__ASSERTS__/css/style.css?{$Think.const.STATIC_RES_HASH}" />
+    <!--[if lt IE 9]>
+    <script src="__ASSERTS__/bootstrap/js/html5shiv.min.js?{$Think.const.STATIC_RES_HASH}"></script>
+    <script src="__ASSERTS__/bootstrap/js/respond.min.js?{$Think.const.STATIC_RES_HASH}"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        var TPX={
+            PATH_ROOT : '__ROOT__',
+            PATH_ASSERTS:'__ROOT__/asserts',
+            SUFFIX_JS:'__JS_SUFFIX__?{$Think.const.STATIC_RES_HASH}',
+            SUFFIX_CSS:'.css?{$Think.const.STATIC_RES_HASH}',
+            LANG:'<?php echo LANG_SET; ?>',
+            UEDITOR:[],
+            REWRITE: <?php if(C('URL_MODEL')==2){echo 'true';}else{echo 'false';} ?>
+        };
+        var require = {
+            baseUrl : '__ROOT__/asserts/js'
+        };
+    </script>
+    <script src="__ASSERTS__/js/require__JS_SUFFIX__?{$Think.const.STATIC_RES_HASH}"></script>
+    <?php echo tpx_config_get('code_counter_position',0)?'':tpx_config_get('code_counter',''); ?>
+</head>
+<body>
+<block name="page_body"></block>
+<script src="__ASSERTS__/res/all__JS_SUFFIX__?{$Think.const.STATIC_RES_HASH}"></script>
+<?php echo tpx_config_get('code_counter_position',0)?tpx_config_get('code_counter',''):''; ?>
+
+<block name="script"></block>
+</body>
+</html>

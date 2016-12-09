@@ -1,0 +1,58 @@
+<extend name="Public/frame"/>
+<block name="page_body">
+
+
+    <include file="Public/header"/>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+
+                <div class="box-product-main">
+                    <h1>
+                        {$data_product.title}
+                    </h1>
+                    <div class="main">
+                        <div class="cover">
+                            <img src="__ROOT__/{$data_product.cover}" />
+                        </div>
+                        <div class="attr">
+                            <if condition="$data_product['price']">
+                                <div class="line">
+                                    <span>参考价格：</span>
+                                    {$data_product['price']} 元
+                                </div>
+                            </if>
+                            <div class="line">
+                                <a class="btn btn-danger" href="{:U('/Contact')}">联系购买</a>
+                                <a class="btn btn-danger" href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo tpx_config_get('contact_qq'); ?>&site=oicqzone.com&menu=yes">联系QQ购买</a>
+                            </div>
+                        </div>
+                        <div class="content">
+                            {$data_product.content}
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-4">
+
+                <include file="Public/news"/>
+
+                <include file="Public/qr"/>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <include file="Public/footer"/>
+
+
+</block>

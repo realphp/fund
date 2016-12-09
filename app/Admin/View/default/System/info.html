@@ -1,0 +1,150 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <div style="padding:5px;">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="icon-bar-chart"></span> {$Think.lang.server_info}
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td class="text-right" style="width:12em"><b>{$Think.lang.version}</b></td>
+                            <td><code>v{$Think.const.APP_VERSION}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.os}</td>
+                            <td><code>{$Think.const.PHP_OS}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.php_version}</td>
+                            <td><code>{$Think.const.PHP_VERSION}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">upload_max_filesize</td>
+                            <td><code><?php echo ini_get ( 'upload_max_filesize' ); ?></code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">post_max_size</td>
+                            <td><code><?php echo ini_get ( 'post_max_size' ); ?></code></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="icon-cog"></span> {$Think.lang.upload_setting}
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td class="text-right" style="width:12em">{$Think.lang.IMAGE_MAX_SIZE}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.IMAGE_MAX_SIZE|byte_format}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.IMAGE_ALLOW_EXT}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.IMAGE_ALLOW_EXT|join=', ',###}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.SCRAWL_MAX_SIZE}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.SCRAWL_MAX_SIZE|byte_format}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.CATCHER_MAX_SIZE}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.CATCHER_MAX_SIZE|byte_format}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.CATCHER_ALLOW_EXT}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.CATCHER_ALLOW_EXT|join=', ',###}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.VIDEO_MAX_SIZE}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.VIDEO_MAX_SIZE|byte_format}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.VIDEO_ALLOW_EXT}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.VIDEO_ALLOW_EXT|join=', ',###}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.FILE_MAX_SIZE}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.FILE_MAX_SIZE|byte_format}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.FILE_ALLOW_EXT}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.FILE_ALLOW_EXT|join=', ',###}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.IMAGE_LIST_EXT}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.IMAGE_LIST_EXT|join=', ',###}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{$Think.lang.FILE_LIST_EXT}</td>
+                            <td>{$Think.config.ADMIN_UPLOAD.FILE_LIST_EXT|join=', ',###}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <if condition="has_module('ModMemberUpload')">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="icon-cog"></span> {$Think.lang.user}{$Think.lang.upload_setting}
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td class="text-right" style="width:12em">{$Think.lang.IMAGE_MAX_SIZE}</td>
+                                <td>{$Think.config.USER_UPLOAD.IMAGE_MAX_SIZE|byte_format}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.IMAGE_ALLOW_EXT}</td>
+                                <td>{$Think.config.USER_UPLOAD.IMAGE_ALLOW_EXT|join=', ',###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.SCRAWL_MAX_SIZE}</td>
+                                <td>{$Think.config.USER_UPLOAD.SCRAWL_MAX_SIZE|byte_format}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.CATCHER_MAX_SIZE}</td>
+                                <td>{$Think.config.USER_UPLOAD.CATCHER_MAX_SIZE|byte_format}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.CATCHER_ALLOW_EXT}</td>
+                                <td>{$Think.config.USER_UPLOAD.CATCHER_ALLOW_EXT|join=', ',###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.VIDEO_MAX_SIZE}</td>
+                                <td>{$Think.config.USER_UPLOAD.VIDEO_MAX_SIZE|byte_format}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.VIDEO_ALLOW_EXT}</td>
+                                <td>{$Think.config.USER_UPLOAD.VIDEO_ALLOW_EXT|join=', ',###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.FILE_MAX_SIZE}</td>
+                                <td>{$Think.config.USER_UPLOAD.FILE_MAX_SIZE|byte_format}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.FILE_ALLOW_EXT}</td>
+                                <td>{$Think.config.USER_UPLOAD.FILE_ALLOW_EXT|join=', ',###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.IMAGE_LIST_EXT}</td>
+                                <td>{$Think.config.USER_UPLOAD.IMAGE_LIST_EXT|join=', ',###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.FILE_LIST_EXT}</td>
+                                <td>{$Think.config.USER_UPLOAD.FILE_LIST_EXT|join=', ',###}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </if>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</block>

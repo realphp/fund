@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>单页管理 &gt; 单页列表

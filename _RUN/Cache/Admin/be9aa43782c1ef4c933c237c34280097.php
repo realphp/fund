@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>数据库 &gt; 数据库备份

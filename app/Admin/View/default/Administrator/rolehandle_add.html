@@ -1,0 +1,83 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+<form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U('Administrator/rolehandle?action=add')}" method="post">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{$Think.lang.role_name}</label>
+        <div class="col-sm-10">
+            <input name="name" type="text" class="form-control" placeholder="" required="required" value="{$data_name|htmlspecialchars}" style="width:auto;" />
+            <div class="help-block">{$Think.lang.role_name_desc}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{$Think.lang.role_status}</label>
+        <div class="col-sm-10">
+            <label class="radio-inline">
+                <input type="radio" name="status" value="1"<if condition="$data_status eq 1"> checked="checked"</if>> {$Think.lang.status_normal}
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" value="0"<if condition="$data_status eq 0"> checked="checked"</if>> {$Think.lang.status_forbidden}
+            </label>
+            <div class="help-block"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{$Think.lang.role_access}</label>
+        <div class="col-sm-10">
+            <script type="text/javascript">
+            $(function(){
+                $('input.checkbox-parent').on('change',function(){
+                    $(this).closest('div').next().find('input').prop('checked',$(this).is(':checked'));
+                });
+                $('input.checkbox-child').on('change',function(){
+                    var parent  = $(this).parent().parent().parent().prev().find('input');
+                    if($(this).is(':checked')){
+                        parent.prop('checked',true);
+                    }else{
+                        if($(this).parent().parent().parent().find('input:checked').length==0){
+                            parent.prop('checked',false);
+                        }
+                    }
+                });
+            });
+            </script>
+            <foreach name="data_nodes" item="n" key="k" >
+                <if condition="$n.name eq 'Admin'">
+                    <foreach name="n._child" item="nn" key="kk">
+                        <if condition="($n.status eq 1) AND ($nn.status eq 1)">
+                            <div style="border-bottom:1px dotted #CCC;font-weight:bold;">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" class="checkbox-parent" name="nodeids[]" value="{$nn.id}-{$nn.level}" />
+                                    {$nn.title}
+                                </label>
+                            </div>
+                            <div style="overflow:hidden;padding-bottom:1em;">
+                                <foreach name="nn._child" item="nnn" key="kkk">
+                                    <div class="pull-left" style="padding-right:1em;">
+                                        <if condition="($n.status eq 1) AND ($nn.status eq 1) AND ($nnn.status eq 1)">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox-child" name="nodeids[]" value="{$nnn.id}-{$nnn.level}" />
+                                                {$nnn.title}
+                                            </label>
+                                        </if>
+                                    </div>
+                                </foreach>
+                            </div>
+                        </if>
+                    </foreach>
+                </if>
+            </foreach>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">{$Think.lang.submit}</button>
+            <button type="button" class="btn btn-default" onclick="window.history.go(-1);">{$Think.lang.back}</button>
+        </div>
+    </div>
+</form>
+
+</block>

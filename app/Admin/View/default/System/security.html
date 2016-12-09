@@ -1,0 +1,45 @@
+<extend name="Public/frame" />
+<block name="page-sub-nav">
+    <a href="{:U('System/security?action=generate')}" role="button">{$Think.lang.finger_generate}</a>
+</block>
+<block name="content-box">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div style="padding:0 0 1em 0;">
+
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{$Think.lang.name}</th>
+            <if condition="is_founder()">
+                <th>{$Think.lang.operation}</th>
+            </if>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="finger_files" item="v">
+            <tr>
+                <td><b>[{$v.ctime|date='Y-m-d H:i:s',###}]</b> {$v.filename}</td>
+                <td>
+                    <a href="{:U('System/security?action=check&file='.md5($v['filename']))}" title="{$Think.lang.finger_check}"><span class="glyphicon glyphicon-refresh"></span></a>&nbsp;&nbsp;
+                    <a href="{:U('System/security?action=delete&file='.md5($v['filename']))}" title="{$Think.lang.delete}"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function admin_mod_build(mod){
+            var url = "{:U('Mod-controller-/build')}";
+            url = url.replace('-controller-',mod);
+            $.post(url,{},$.defaultFormCallback);
+        }
+    </script>
+
+</block>

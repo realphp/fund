@@ -1,0 +1,50 @@
+<extend name="Public/frame"/>
+<block name="page_body">
+    <link rel="stylesheet" href="__ASSERTS__/css/baguettebox.min.css">
+    <link rel="stylesheet" href="__ASSERTS__/css/photo.css">
+    <include file="Public/header"/>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-2 about-left" style="padding:0px;">
+                <div class="about-title">
+                    <h3>最新资讯</h3>
+                    <em></em>
+                    <h4><a href="{:U('/News')}">新闻动态</a></h4>
+                    <h4><a href="{:U('/Articles')}">我们在行动</a></h4>
+                    <h4><a href="{:U('/Album')}" class="active2">相册</a></h4>
+                </div>
+                <include file="Public/donate-left"/>
+
+            </div>
+
+            <div class="col-md-10 about-desc">
+                <h2>{$album.title}</h2>
+                <hr>
+                <p>{$album.description}</p><br><br>
+                <iframe frameborder="0" style="display: none;"></iframe>
+                <!-- 代码 开始 -->
+                <div class="baguetteBoxOne gallery ">
+                    <foreach name="list" item="v">
+                        <a href="/{$v.path}" class="thumbnail"><img src="/{$v.path}"></a>
+                    </foreach>
+                </div>
+                <div id="bdshare_s" style="display: block;">
+                    <iframe id="bdsIfr"
+                            style="position: absolute; display: none; z-index: 9999; top: 44px; left: 1380px; height: 314px; width: 212px;"
+                            frameborder="0"></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="__ASSERTS__/js/baguettebox.min.js"></script>
+    <script>
+        baguetteBox.run('.baguetteBoxOne', {
+            animation: 'fadeIn',
+        });
+    </script>
+    <include file="Public/footer"/>
+</block>

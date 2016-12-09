@@ -1,0 +1,605 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+<if condition="!empty($id)">
+    <form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U(CONTROLLER_NAME.'/cmshandle?action=edit&id='.$id.'&page='.$page)}" method="post">
+<else />
+    <form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U(CONTROLLER_NAME.'/cmshandle?action=add&page='.$page)}" method="post">
+</if>
+
+    <foreach name="fields" item="f" key="k" >
+
+        <switch name="f.type" >
+
+            <case value="baidu_map">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}_lng"
+                               type="text"
+                               class="form-control form-inline"
+                               value="{$f.value.lng|htmlspecialchars}"
+                        <if condition="in_array('readonly',$f['rules'])">
+                            readonly="readonly"
+                        </if>
+                        <if condition="in_array('required',$f['rules'])">
+                            required="required"
+                        </if>
+                        />
+                        <input name="{$k}_lat"
+                               type="text"
+                               class="form-control form-inline"
+                               value="{$f.value.lat|htmlspecialchars}"
+                        <if condition="in_array('readonly',$f['rules'])">
+                            readonly="readonly"
+                        </if>
+                        <if condition="in_array('required',$f['rules'])">
+                            required="required"
+                        </if>
+                        />
+                        <input name="{$k}_keywords" type="text" class="form-control" placeholder="输入地址直接定位" value="" />
+                        <div id="{$k}-warp" style="width:100%;height:400px;border:1px solid #CCC;"></div>
+                        <script type="text/javascript">
+                            function baidu_map_init_{$k}() {
+
+                                var setPoint = function(pt){
+                                    $('input[name={$k}_lng]').val(pt.lng);
+                                    $('input[name={$k}_lat]').val(pt.lat);
+                                };
+
+                                var getPoint = function(){
+                                    return new BMap.Point($('input[name={$k}_lng]').val(),$('input[name={$k}_lat]').val());
+                                };
+
+                                var map = new BMap.Map("{$k}-warp");
+                                map.centerAndZoom(getPoint(),15);
+                                map.enableScrollWheelZoom();
+
+                                var marker = new BMap.Marker(map.getCenter());
+                                marker.enableDragging();
+                                marker.addEventListener('dragend',function(e){
+                                    setPoint(e.point);
+                                });
+                                map.addOverlay(marker);
+                                map.addEventListener('click',function(e){
+                                    setPoint(e.point);
+                                    marker.setPosition(e.point);
+                                });
+
+                                var search = function(){
+                                    map.centerAndZoom($('input[name={$k}_keywords]').val(),15);
+                                    marker.setPosition(map.getCenter());
+                                    setPoint(map.getCenter());
+                                };
+                                var searchTimeout = null;
+                                $('input[name={$k}_keywords]').on('keyup',function(){
+                                    if(searchTimeout){
+                                        clearTimeout(searchTimeout);
+                                        searchTimeout = null;
+                                    }
+                                    searchTimeout = setTimeout(search, 100);
+                                });
+                            }
+                            require(['jquery.extern'], function () {
+                                $.includeJS("api?v=2.0&ak={$f.key}&callback=baidu_map_init_{$k}&",'http://api.map.baidu.com/');
+                            });
+                        </script>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="china_district">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}" type="hidden" value="{$f.value|htmlspecialchars}"
+                        <if condition="in_array('readonly',$f['rules'])">
+                            readonly="readonly"
+                        </if>
+                        <if condition="in_array('required',$f['rules'])">
+                            required="required"
+                        </if> />
+                        <span id="{$k}-warp"></span>
+                        <script type="text/javascript">
+                            require(['jquery.category'], function () {
+                                $('#{$k}-warp').category({
+                                    selectClass: 'form-control input-sm form-inline',
+                                    inputNames: '',
+                                    inputGlobalName: '',
+                                    ajaxUrl: "{:U('System/china_district')}",
+                                    pleaseSelectText: '[请选择]',
+                                    initValue: '{$f.value|htmlspecialchars}',
+                                    data: {select_level:'{$f.select_level}'},
+                                    onSelect: function (id) {
+                                        $('input[name={$k}]').val(id);
+                                    }
+                                });
+                            });
+                        </script>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="cms_id">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}"
+                               type="text"
+                               class="form-control input-inline"
+                               placeholder=""
+                               value="{$f.value|htmlspecialchars}"
+                        <if condition="in_array('readonly',$f['rules'])">
+                            readonly="readonly"
+                        </if>
+                        <if condition="in_array('required',$f['rules'])">
+                            required="required"
+                        </if> />
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="member_uid">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}"
+                               type="text"
+                               class="form-control input-inline"
+                               placeholder=""
+                               value="{$f.value|htmlspecialchars}"
+                        <if condition="in_array('readonly',$f['rules'])">
+                            readonly="readonly"
+                        </if>
+                        <if condition="in_array('required',$f['rules'])">
+                            required="required"
+                        </if> />
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="tag">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <div class="pillbox" id="{$k}">
+                            <ul class="clearfix pill-group">
+                                <volist name="f['value']" id="v">
+                                    <li class="btn btn-default pill" data-value="{$v}">
+                                        <span>{$v}</span>
+                                        <span class="glyphicon glyphicon-close">
+                                            <span class="sr-only">Remove</span>
+                                        </span>
+                                    </li>
+                                </volist>
+                                <li class="pillbox-input-wrap btn-group">
+                                    <input type="text" class="form-control dropdown-toggle pillbox-add-item" placeholder="点击如下可用标签或输入" />
+                                </li>
+                            </ul>
+                        </div>
+                        <script>
+                            require(['jquery.extern','fuelux/pillbox'],function(){
+                                $.includeCSS('css/fuelux');
+                                $('#{$k}').pillbox();
+                                $('#{$k}-list .btn').on('click',function(){
+                                    $('#{$k}').pillbox('addItems', -1, [{ text: $(this).text(), value:$(this).text(), attr: {}, data: {} }]);
+                                    return false;
+                                });
+                            });
+                        </script>
+                        <div style="padding:10px 0;" id="{$k}-list">
+                            <volist name="f['option']" id="v">
+                                <button class="btn btn-default btn-sm">{$v}</button>
+                            </volist>
+                        </div>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                        <input type="hidden" name="{$k}" value="" />
+                    </div>
+                </div>
+            </case>
+
+            <case value="text">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}"
+                                type="text"
+                                class="form-control"
+                                placeholder=""
+                                value="{$f.value|htmlspecialchars}"
+                                <if condition="in_array('readonly',$f['rules'])">
+                                readonly="readonly"
+                                </if>
+                                <if condition="in_array('required',$f['rules'])">
+                                required="required"
+                                </if> />
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="number">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}"
+                                type="text"
+                                class="form-control"
+                                placeholder=""
+                                value="{$f.value|htmlspecialchars}"
+                                style="width:auto;"
+                                <if condition="in_array('readonly',$f['rules'])">
+                                readonly="readonly"
+                                </if>
+                                <if condition="in_array('required',$f['rules'])">
+                                required="required"
+                                </if> />
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="datetime">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}"
+                                type="text"
+                                class="form-control"
+                                placeholder=""
+                                value="{$f.value|date='Y-m-d H:i:s',###}"
+                                style="width:auto;"
+                                <if condition="in_array('readonly',$f['rules'])">
+                                readonly="readonly"
+                                </if>
+                                <if condition="in_array('required',$f['rules'])">
+                                required="required"
+                                </if> />
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                        <script type="text/javascript">
+                            require(["jquery.extern"],function(){
+                                $.includeCSS("jquery-ui-1.11.2/jquery-ui-timepicker-addon");
+                            });
+                            require(["jquery.ui.timepicker"],function(){
+                                $( "input[name={$k}]" ).datetimepicker({
+                                    dateFormat:"yy-mm-dd",
+                                    timeFormat:'HH:mm:ss'
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </case>
+
+            <case value="date">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <input name="{$k}"
+                                type="text"
+                                class="form-control"
+                                placeholder=""
+                                value="{$f.value|date='Y-m-d',###}"
+                                style="width:auto;"
+                                <if condition="in_array('readonly',$f['rules'])">
+                                readonly="readonly"
+                                </if>
+                                <if condition="in_array('required',$f['rules'])">
+                                required="required"
+                                </if> />
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                        <script type="text/javascript">
+                            require(["jquery.extern"],function(){
+                                $.includeCSS("jquery-ui-1.11.2/jquery-ui-timepicker-addon");
+                            });
+                            require(["jquery.ui.timepicker"],function(){
+                                $( "input[name={$k}]" ).datepicker({
+                                    dateFormat:"yy-mm-dd",
+                                    timeFormat:''
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </case>
+
+            <case value="switch">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline">
+                            <input type="radio" name="{$k}" value="1"<if condition="$f.value eq 1"> checked="checked"</if>> {$Think.lang.switch_on}
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="{$k}" value="0"<if condition="$f.value eq 0"> checked="checked"</if>> {$Think.lang.switch_off}
+                        </label>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="bigtext">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <textarea name="{$k}"
+                                    class="form-control"
+                                    placeholder=""
+                                    style="min-height:6em;"
+                                    <if condition="in_array('readonly',$f['rules'])">
+                                    readonly="readonly"
+                                    </if>
+                                    <if condition="in_array('required',$f['rules'])">
+                                    required="required"
+                                    </if>
+                                    >{$f.value|htmlspecialchars}</textarea>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="selectnumber">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <select name="{$k}"
+                                    class="form-control"
+                                    style="width:auto;"
+                                    <if condition="in_array('readonly',$f['rules'])">
+                                    readonly="readonly"
+                                    </if>
+                                    <if condition="in_array('required',$f['rules'])">
+                                    required="required"
+                                    </if>
+                                >
+                            <foreach name="f.option" item="vv" key="kk">
+                                <if condition="$kk eq $f['value']">
+                                    <option value="{$kk|htmlspecialchars}" selected="selected">{$vv}</option>
+                                <else />
+                                    <option value="{$kk|htmlspecialchars}">{$vv}</option>
+                                </if>
+
+                            </foreach>
+                        </select>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="selecttext">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <select name="{$k}"
+                                class="form-control"
+                                style="width:auto;"
+                                <if condition="in_array('readonly',$f['rules'])">
+                                    readonly="readonly"
+                                </if>
+                                <if condition="in_array('required',$f['rules'])">
+                                    required="required"
+                                </if>
+                                >
+                            <foreach name="f.option" item="vv" key="kk">
+                                <if condition="$kk eq $f['value']">
+                                    <option value="{$kk|htmlspecialchars}" selected="selected">{$vv}</option>
+                                    <else />
+                                    <option value="{$kk|htmlspecialchars}">{$vv}</option>
+                                </if>
+
+                            </foreach>
+                        </select>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="checkbox">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <if condition="in_array('inline',$f['rules'])">
+                            <foreach name="f.option" item="vv" key="kk">
+                                <div class="checkbox" style="display:inline-block;padding-right:2em;">
+                                    <label>
+                                        <if condition="in_array($kk,$f['value'])">
+                                            <input name="{$k}[]" type="checkbox" checked="checked" value="{$kk|htmlspecialchars}"> {$vv}
+                                        <else />
+                                            <input name="{$k}[]" type="checkbox" value="{$kk|htmlspecialchars}"> {$vv}
+                                        </if>
+                                    </label>
+                                </div>
+                            </foreach>
+                        <else />
+                            <foreach name="f.option" item="vv" key="kk">
+                                <div class="checkbox">
+                                    <label>
+                                        <if condition="in_array($kk,$f['value'])">
+                                            <input name="{$k}[]" type="checkbox" checked="checked" value="{$kk|htmlspecialchars}"> {$vv}
+                                        <else />
+                                            <input name="{$k}[]" type="checkbox" value="{$kk|htmlspecialchars}"> {$vv}
+                                        </if>
+                                    </label>
+                                </div>
+                            </foreach>
+                        </if>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="richtext">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <script id="{$k}" name="{$k}" type="text/plain">
+                            {$f.value}
+                        </script>
+                        <script type="text/javascript">
+                            require(["ueditor"],function(){
+                                var ue = UE.getEditor('{$k}') ;
+                                if(TPX.UEDITOR){
+                                    TPX.UEDITOR.push(ue);
+                                }
+                            });
+                        </script>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="imagefile">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+
+                        <?php $imagefile_id = 'imagefile_'.mt_rand(100000,999999); ?>
+                        <table border="0" style="table-layout:fixed">
+                            <tr>
+                                <td>
+                                    <span style="display:inline-block;padding:3px;border:1px solid #CCC;">
+                                        <img src="{$f.value}" id="{$k}-preview" style="height:150px;min-width:50px;max-width:400px;" />
+                                    </span>
+                                </td>
+                                <td width="20">
+                                    <input type="hidden" name="{$k}" id="{$k}" value="{$f.value|htmlspecialchars}" />
+                                </td>
+                                <td width="120">
+                                    <div id="{$imagefile_id}"></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <script type="text/javascript">
+                            require(["upload_button"],function(){
+                                $("#{$imagefile_id}").UploadButton({
+                                    value_holder   : "#{$k}",
+                                    preview_holder : "#{$k}-preview",
+                                    width 	    : 24,
+                                    height 	    : 24,
+                                    postURL     : "{:U('System/uploadhandle?action=uploadbutton&type=image')}",
+                                    background  : "http://{$Think.server.HTTP_HOST}__ROOT__/asserts/upload_button/upload_24x24.png",
+                                    acceptExt   : "<?php    $exts=$f['extension'];
+                                                            foreach($exts as $ik=>$iv)
+                                                            $exts[$ik]='.'.$iv;
+                                                            echo join(',',$exts);  ?>",
+                                    showLoading : true,
+                                    showAlert   : false
+                                });
+                            });
+                        </script>
+
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="commonfile">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+
+                        <?php $commonfile_id = 'commonfile_'.mt_rand(100000,999999); ?>
+                        <table border="0" style="table-layout:fixed">
+                            <tr>
+                                <td>
+                                    <input name="{$k}"
+                                            id="{$k}"
+                                            type="text"
+                                            class="form-control"
+                                            placeholder=""
+                                            value="{$f.value|htmlspecialchars}"
+                                            <if condition="in_array('readonly',$f['rules'])">
+                                            readonly="readonly"
+                                            </if>
+                                            <if condition="in_array('required',$f['rules'])">
+                                            required="required"
+                                            </if> />
+                                </td>
+                                <td>
+                                    &nbsp;&nbsp;<a href="{$f.value}" id="{$k}-preview" target="_blank"
+                                                <if condition="!$f['value']">
+                                                    style="display:none;"
+                                                </if>
+                                        >{$Think.lang.view}</a>&nbsp;&nbsp;
+                                </td>
+                                <td width="120">
+                                    <div id="{$commonfile_id}"></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <script type="text/javascript">
+                            require(["upload_button"],function(){
+                                $("#{$commonfile_id}").UploadButton({
+                                    value_holder   : "#{$k}",
+                                    preview_holder : "#{$k}-preview",
+                                    width 	    : 24,
+                                    height 	    : 24,
+                                    postURL     : "{:U('System/uploadhandle?action=uploadbutton&type=file')}",
+                                    background  : "http://{$Think.server.HTTP_HOST}__ROOT__/asserts/upload_button/upload_24x24.png",
+                                    acceptExt   : "<?php $exts=$f['extension'];
+                                                        foreach($exts as $ik=>$iv)
+                                                        $exts[$ik]='.'.$iv;
+                                                        echo join(',',$exts);  ?>",
+                                    showLoading : true,
+                                    showAlert   : false
+                                });
+                            });
+                        </script>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <case value="treeparent">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$f.title}</label>
+                    <div class="col-sm-9">
+                        <select name="{$k}"
+                                class="form-control"
+                                style="width:auto;"
+                        <if condition="in_array('readonly',$f['rules'])">
+                            readonly="readonly"
+                        </if>
+                        <if condition="in_array('required',$f['rules'])">
+                            required="required"
+                        </if>
+                        >
+                        <option value="0">顶级分类</option>
+                        <foreach name="f.option" item="vv">
+                            <if condition="$vv['id'] eq $f['value']">
+                                <option value="{$vv.id|htmlspecialchars}" selected="selected">{$vv.title}</option>
+                            <else />
+                                <option value="{$vv.id|htmlspecialchars}">{$vv.title}</option>
+                            </if>
+                        </foreach>
+                        </select>
+                        <div class="help-block">{$f.description|htmlspecialchars}</div>
+                    </div>
+                </div>
+            </case>
+
+            <default />
+                <p class="bg-danger">
+                    Unknown field <b>{$f.type}</b>
+                </p>
+        </switch>
+
+
+    </foreach>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <if condition="!$cfg_all_field_readonly">
+                <button type="submit" class="btn btn-primary">{$Think.lang.submit}</button>
+            </if>
+            <button type="button" class="btn btn-default" onclick="window.history.go(-1);">{$Think.lang.back}</button>
+        </div>
+    </div>
+
+</form>
+
+</block>

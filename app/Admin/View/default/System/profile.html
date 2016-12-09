@@ -1,0 +1,93 @@
+<extend name="Public/frame" />
+<block name="page-sub-nav">
+    <if condition="access_permit('changepwd')">
+        <a href="{:U('System/changepwd')}" role="button">{$Think.lang.change_pwd}</a>
+    </if>
+    <a href="{:U('Login/out')}">{$Think.lang.logout}</a>
+</block>
+<block name="content-box">
+
+    <div style="padding:5px;">
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {$Think.lang.profile}
+                    </div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td class="text-right">{$Think.lang.username|htmlspecialchars}:</td>
+                                <td>{$data_user.username}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.reg_time}:</td>
+                                <td>{$data_user.reg_time|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.reg_ip}:</td>
+                                <td>{$data_user.reg_ip|long2ip}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.last_login_time}:</td>
+                                <td>{$data_user.last_login_time|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.last_login_ip}:</td>
+                                <td>{$data_user.last_login_ip|long2ip}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">{$Think.lang.last_change_pwd_time}:</td>
+                                <td>{$data_user.last_change_pwd_time|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {$Think.lang.power}
+                    </div>
+                    <div class="panel-body">
+
+                        <foreach name="data_nodes" item="n" key="k" >
+                            <if condition="$n.name eq 'Admin'">
+                                <foreach name="n._child" item="nn" key="kk">
+                                    <if condition="($n.status eq 1) AND ($nn.status eq 1)">
+                                        <div style="border-bottom:1px dotted #CCC;font-weight:bold;">
+                                            <if condition="$data_access_is_super OR in_array($nn['id'], $data_accesses)">
+                                                {$nn.title}
+                                            </if>
+                                        </div>
+                                        <div style="overflow:hidden;padding-bottom:1em;">
+                                            <foreach name="nn._child" item="nnn" key="kkk">
+                                                <div class="pull-left" style="padding-right:1em;">
+                                                    <if condition="($n.status eq 1) AND ($nn.status eq 1) AND ($nnn.status eq 1)">
+                                                        <if condition="$data_access_is_super OR in_array($nnn['id'], $data_accesses)">
+                                                            {$nnn.title}
+                                                        </if>
+                                                    </if>
+                                                </div>
+                                            </foreach>
+                                        </div>
+                                    </if>
+                                </foreach>
+                            </if>
+                        </foreach>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</block>

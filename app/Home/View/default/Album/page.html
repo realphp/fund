@@ -1,0 +1,53 @@
+<extend name="Public/frame"/>
+<block name="page_body">
+
+
+    <include file="Public/header"/>
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-2 about-left" style="padding:0px;">
+                <div class="about-title">
+                    <h3>最新资讯</h3>
+                    <em></em>
+                    <h4><a href="{:U('/News')}">新闻动态</a></h4>
+                    <h4><a href="{:U('/Articles')}">我们在行动</a></h4>
+                    <h4><a href="{:U('/Album')}" class="active2">相册</a></h4>
+                </div>
+                <include file="Public/donate-left"/>
+
+            </div>
+
+            <div class="col-md-10 about-desc">
+                <h2>相册</h2>
+                <hr>
+
+                <foreach name="data_news" item="v">
+                    <div class="col-md-4">
+                        <a href="{:U('photo',array('aid'=>$v['id']))}" class="thumbnail">
+                            <img src="/{$v.cover}" style="height: 150px;">
+                            <div class="caption">
+                                <h3>{$v.title}</h3>
+                            </div>
+                        </a>
+
+                    </div>
+                </foreach>
+
+                <div class="pagination">
+                    {$data_page}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <include file="Public/footer"/>
+
+
+</block>

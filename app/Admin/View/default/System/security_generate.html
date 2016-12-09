@@ -1,0 +1,36 @@
+<extend name="Public/frame" />
+<block name="page-sub-nav">
+    <a href="{:U('System/security')}" role="button">{$Think.lang.file_list}</a>
+</block>
+<block name="content-box">
+
+    <div class="well well-sm">
+        {$Think.lang.finger_file} : {$filename}
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{$Think.lang.name}</th>
+            <th>MD5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="files_md5" item="v">
+            <tr>
+                <td>{$v[0]}</td>
+                <td>{$v[1]}</td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function admin_mod_build(mod){
+            var url = "{:U('Mod-controller-/build')}";
+            url = url.replace('-controller-',mod);
+            $.post(url,{},$.defaultFormCallback);
+        }
+    </script>
+
+</block>

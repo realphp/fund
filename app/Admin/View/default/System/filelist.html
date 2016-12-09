@@ -1,0 +1,50 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <table id="table-grid" class="table table-hover">
+        <thead>
+            <tr>
+                <th data-column-id="id" data-order="desc" data-type="numeric" data-identifier="true">ID</th>
+                <th data-column-id="uptime" data-sortable="false">{$Think.lang.file_uptime}</th>
+                <th data-column-id="fullpath" data-formatter="fullpath" data-sortable="false">{$Think.lang.file_path}</th>
+                <th data-column-id="filesize" data-sortable="false">文件大小</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">{$Think.lang.operation}</th>
+            </tr>
+        </thead>
+    </table>
+
+    <script type="text/javascript">
+    var grid;
+    /*<if condition="access_permit('filehandle')">*/
+    var grid_buttons = ['<div class="btn-group">',
+        '<a href="javascript:void(0);" onclick="admin_grid_delete(\'{:U(CONTROLLER_NAME.'/filehandle?action=delete')}\');" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>',
+        '</div>'].join('');
+    /*<else />*/
+    var grid_buttons = '';
+    /*</if>*/
+
+    require(['jquery.bootgrid'],function(){
+        grid = $("#table-grid").bootgrid({
+            <include file="Public:jstablelist" />
+            url: "{:U(CONTROLLER_NAME.'/filelist')}",
+            formatters: {
+                commands: function(col, row){
+                    return "<a class='command-delete' data-row-id='" + row.id + "'><span class='glyphicon glyphicon-remove'></span></a>";
+                },
+                fullpath: function(col, row){
+                    return "<a href='__ROOT__/data/" + row.fullpath + "' target='_blank'>" + row.fullpath + "</a>";
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid", function(){
+
+            grid.find(".command-delete").on("click", function(e){
+
+                admin_grid_delete_one( "{:U(CONTROLLER_NAME.'/filehandle?action=delete')}", $(this).data("row-id"));
+
+            });
+        });
+    });
+
+    </script>
+
+</block>

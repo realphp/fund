@@ -1,0 +1,26 @@
+<?php
+return array (
+		'input_sql_here' => '这里输入SQL语句',
+		'no_record' => '无记录',
+		'affect_rows' => '影响记录数',
+		'error_sql' => '错误SQL语句',
+		'table' => '表',
+		'record_count' => '记录数',
+		'repair' => '修复',
+		'export' => '导出',
+		'error_table_name' => '错误的数据表名',
+		'backup_selected' => '备份所选',
+		'backup_success' => '备份成功',
+		'backuping' => '正在备份',
+		'backup_initing' => '备份正在初始化',
+		'file' => '文件',
+		'filesize' => '文件大小',
+		'restore_selected' => '恢复所选',
+		'no_selected' => '没有选择',
+		'restore_initing' => '恢复正在初始化',
+		'restore' => '恢复',
+		'error_restore_file' => '错误的恢复文件',
+		'restore_success' => '恢复成功',
+		'restoring' => '正在恢复',
+		'filelist' => '文件列表' 
+);

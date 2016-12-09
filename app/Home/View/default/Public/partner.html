@@ -1,0 +1,17 @@
+<div class="col-md-12">
+    <div class="box-partner-list">
+        <h2>
+            合作伙伴
+        </h2>
+        <div class="partner-image">
+            <?php foreach(D('Partner','Service')->list_by_type(1) as $v){ ?>
+            <a href="{$v.url}" target="_blank"><img src="__STATIC_ROOT__/{$v.logo}" alt="{$v.name|htmlspecialchars}" /></a>
+            <?php } ?>
+        </div>
+        <div class="partner-text">
+            <?php foreach(D('Partner','Service')->list_by_type(2) as $v){ ?>
+            <a href="{$v.url}" target="_blank">[{$v.name|htmlspecialchars}]</a>
+            <?php } ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+[ 2016-11-25T09:30:37+08:00 ] 127.0.0.1 /
+NOTIC: [8] Undefined variable: page_keywords E:\xampp\htdocs\fund\_RUN\Cache\Home\0b3445db061f7b092197228f7d7f5bd5.php 第 8 行.
+NOTIC: [8] Undefined variable: page_description E:\xampp\htdocs\fund\_RUN\Cache\Home\0b3445db061f7b092197228f7d7f5bd5.php 第 9 行.
+NOTIC: [8] Undefined variable: page_title E:\xampp\htdocs\fund\_RUN\Cache\Home\0b3445db061f7b092197228f7d7f5bd5.php 第 15 行.
+NOTIC: [8192] curl_setopt(): The usage of the @filename API for file uploading is deprecated. Please use the CURLFile class instead E:\xampp\htdocs\fund\app\Common\Cron\system_guard.php 第 45 行.
+
+[ 2016-11-25T09:30:39+08:00 ] 127.0.0.1 /index.php?s=/about
+NOTIC: [8] Undefined variable: page_keywords E:\xampp\htdocs\fund\_RUN\Cache\Home\17a166a20d52c4a2b2f2974ed83c6b4f.php 第 8 行.
+NOTIC: [8] Undefined variable: page_description E:\xampp\htdocs\fund\_RUN\Cache\Home\17a166a20d52c4a2b2f2974ed83c6b4f.php 第 9 行.
+NOTIC: [8] Undefined variable: page_title E:\xampp\htdocs\fund\_RUN\Cache\Home\17a166a20d52c4a2b2f2974ed83c6b4f.php 第 15 行.
+
+[ 2016-11-25T09:30:40+08:00 ] 127.0.0.1 /index.php?s=/about/welfare
+NOTIC: [8] Undefined variable: page_keywords E:\xampp\htdocs\fund\_RUN\Cache\Home\e5053479ea00fb9280fc16a6b40fc098.php 第 8 行.
+NOTIC: [8] Undefined variable: page_description E:\xampp\htdocs\fund\_RUN\Cache\Home\e5053479ea00fb9280fc16a6b40fc098.php 第 9 行.
+NOTIC: [8] Undefined variable: page_title E:\xampp\htdocs\fund\_RUN\Cache\Home\e5053479ea00fb9280fc16a6b40fc098.php 第 15 行.
+
+[ 2016-11-25T09:30:59+08:00 ] 127.0.0.1 /index.php?s=/partner
+NOTIC: [8] Undefined variable: page_keywords E:\xampp\htdocs\fund\_RUN\Cache\Home\0e8919f706c1a6584866dff560d343ab.php 第 8 行.
+NOTIC: [8] Undefined variable: page_description E:\xampp\htdocs\fund\_RUN\Cache\Home\0e8919f706c1a6584866dff560d343ab.php 第 9 行.
+NOTIC: [8] Undefined variable: page_title E:\xampp\htdocs\fund\_RUN\Cache\Home\0e8919f706c1a6584866dff560d343ab.php 第 15 行.
+
+[ 2016-11-25T09:31:00+08:00 ] 127.0.0.1 /index.php?s=/donate
+NOTIC: [8] Undefined variable: page_keywords E:\xampp\htdocs\fund\_RUN\Cache\Home\087d80c58176d68cabe28b22dc959bbe.php 第 8 行.
+NOTIC: [8] Undefined variable: page_description E:\xampp\htdocs\fund\_RUN\Cache\Home\087d80c58176d68cabe28b22dc959bbe.php 第 9 行.
+NOTIC: [8] Undefined variable: page_title E:\xampp\htdocs\fund\_RUN\Cache\Home\087d80c58176d68cabe28b22dc959bbe.php 第 15 行.
+

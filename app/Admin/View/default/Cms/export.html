@@ -1,0 +1,33 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+
+    <div style="width:780px;margin:10px auto;background:#FFF;padding:20px;">
+        <form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U(CONTROLLER_NAME.'/cmshandle?action=export_do&id='.$data_id)}" method="post">
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-9">
+                    <label><input type="checkbox" name="fields[]" value="{$data_pk}" checked disabled="disabled" /> {$data_pk|strtoupper}</label>
+                </div>
+            </div>
+
+            <foreach name="data_fields" key="k" item="i">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        <label><input type="checkbox" name="fields[]" value="{$k}" /> {$i.title|htmlspecialchars}</label>
+                    </div>
+                </div>
+            </foreach>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-9">
+                    <button type="submit" class="btn btn-primary">{$Think.lang.export}</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+</block>

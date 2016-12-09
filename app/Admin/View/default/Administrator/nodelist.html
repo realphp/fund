@@ -1,0 +1,45 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <foreach name="nodes" item="n" key="k" >
+        <if condition="$n.name eq 'Admin'">
+            <foreach name="n._child" item="nn" key="kk">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <if condition="($n.status eq 1) AND ($nn.status eq 1)">
+                            <b>{$nn.title}</b>
+                        <else />
+                            <b class="text-disable">{$nn.title}</b>
+                        </if>
+                        <if condition="access_permit('nodehandle')">
+                            <a href="{:U('Administrator/nodehandle?action=edit&id='.$nn['id'])}"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="{:U('Administrator/nodehandle?action=delete&ids='.$nn['id'])}"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="pull-right" href="{:U('Administrator/nodehandle?action=add&pid='.$nn['id'])}"><span class="glyphicon glyphicon-plus"></span></a>
+                        </if>
+                    </div>
+                    <div class="panel-body" style="line-height:2em;">
+                        <foreach name="nn._child" item="nnn" key="kkk">
+                            <div class="pull-left" style="padding-right:1em;">
+                                <if condition="($n.status eq 1) AND ($nn.status eq 1) AND ($nnn.status eq 1)">
+                                    <span>{$nnn.title}</span>
+                                <else />
+                                    <span class="text-disable">{$nnn.title}</span>
+                                </if>
+                                <if condition="access_permit('nodehandle')">
+                                    <a href="{:U('Administrator/nodehandle?action=edit&id='.$nnn['id'])}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a href="{:U('Administrator/nodehandle?action=delete&ids='.$nnn['id'])}"><span class="glyphicon glyphicon-trash"></span></a>
+                                </if>
+                            </div>
+                        </foreach>
+                    </div>
+                </div>
+            </foreach>
+        </if>
+    </foreach>
+    <if condition="access_permit('nodehandle')">
+        <a href="{:U('Administrator/nodehandle?action=add&pid='.$n['id'])}"><span class="glyphicon glyphicon-plus"></span></a>
+    </if>
+
+
+
+</block>

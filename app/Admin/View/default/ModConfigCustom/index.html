@@ -1,0 +1,123 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">首页公司介绍</label>
+            <div class="col-sm-9">
+                <script id="home_about" name="home_about" type="text/plain">
+                            {$home_about}
+                        </script>
+                <script type="text/javascript">
+                    require(["ueditor"],function(){
+                        var ue = UE.getEditor('home_about') ;
+                        if(TPX.UEDITOR){
+                            TPX.UEDITOR.push(ue);
+                        }
+                    });
+                </script>
+                <div class="help-block"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Logo</label>
+            <div class="col-sm-9">
+                <table border="0" style="table-layout:fixed">
+                    <tr>
+                        <td>
+                            <span style="display:inline-block;padding:3px;border:1px solid #CCC;">
+                                <img src="{$image_logo}" id="image_logo-preview" style="height:150px;min-width:50px;max-width:400px;" />
+                            </span>
+                        </td>
+                        <td width="20">
+                            <input type="hidden" name="image_logo" id="image_logo" value="{$image_logo|t_html}" />
+                        </td>
+                        <td width="120">
+                            <div id="image_logo-box"></div>
+                        </td>
+                    </tr>
+                </table>
+                <script type="text/javascript">
+                    require(["upload_button"],function(){
+                        $("#image_logo-box").UploadButton({
+                            value_holder   : "#image_logo",
+                            preview_holder : "#image_logo-preview",
+                            width 	    : 24,
+                            height 	    : 24,
+                            postURL     : "{:U('System/uploadhandle?action=uploadbutton&type=image')}",
+                            background  : "http://{$Think.server.HTTP_HOST}__ROOT__/asserts/upload_button/upload_24x24.png",
+                            acceptExt   : ".png",
+                            showLoading : true,
+                            showAlert   : false
+                        });
+                    });
+                </script>
+                <div class="help-block">尺寸150x50，PNG格式</div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">二维码</label>
+            <div class="col-sm-9">
+                <table border="0" style="table-layout:fixed">
+                    <tr>
+                        <td>
+                            <span style="display:inline-block;padding:3px;border:1px solid #CCC;">
+                                <img src="{$image_qr}" id="image_qr-preview" style="height:150px;min-width:50px;max-width:400px;" />
+                            </span>
+                        </td>
+                        <td width="20">
+                            <input type="hidden" name="image_qr" id="image_qr" value="{$image_qr|t_html}" />
+                        </td>
+                        <td width="120">
+                            <div id="image_qr-box"></div>
+                        </td>
+                    </tr>
+                </table>
+                <script type="text/javascript">
+                    require(["upload_button"],function(){
+                        $("#image_qr-box").UploadButton({
+                            value_holder   : "#image_qr",
+                            preview_holder : "#image_qr-preview",
+                            width 	    : 24,
+                            height 	    : 24,
+                            postURL     : "{:U('System/uploadhandle?action=uploadbutton&type=image')}",
+                            background  : "http://{$Think.server.HTTP_HOST}__ROOT__/asserts/upload_button/upload_24x24.png",
+                            acceptExt   : ".png",
+                            showLoading : true,
+                            showAlert   : false
+                        });
+                    });
+                </script>
+                <div class="help-block"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">色调</label>
+            <div class="col-sm-9">
+                <select name="theme_color"
+                        class="form-control"
+                        style="width:auto;">
+                    <option value="red" <if condition="$theme_color eq 'red'">selected</if>>红色系</option>
+                    <option value="blue" <if condition="$theme_color eq 'blue'">selected</if>>蓝色系</option>
+                    <option value="green" <if condition="$theme_color eq 'green'">selected</if>>绿色系</option>
+                    <option value="orange" <if condition="$theme_color eq 'orange'">selected</if>>橙色系</option>
+                </select>
+                <div class="help-block"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">{$Think.lang.submit}</button>
+            </div>
+        </div>
+
+    </form>
+
+</block>

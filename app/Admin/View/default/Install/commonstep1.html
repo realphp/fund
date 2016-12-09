@@ -1,0 +1,117 @@
+<extend name="Public/frame"/>
+
+<block name="content-box">
+
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">{$Think.lang.install} [ {$Think.lang.environment_check} ]</h3>
+        </div>
+
+
+        <div class="well">
+
+            <if condition="$writeable_config">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.folder} ./_CFG/ {$Think.lang.writable} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.folder} ./_CFG/ {$Think.lang.not_writable} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$writeable_run">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.folder} ./_RUN/ {$Think.lang.writable} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.folder} ./_RUN/ {$Think.lang.not_writable} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$writeable_data">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.folder} ./data/ {$Think.lang.writable} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.folder} ./data/ {$Think.lang.not_writable} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$dependency_pdo">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.dependency} pdo {$Think.lang.exists} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.dependency} pdo {$Think.lang.not_exists} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$dependency_pdo_mysql">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.dependency} pdo_mysql {$Think.lang.exists} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.dependency} pdo_mysql {$Think.lang.not_exists} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$dependency_file_get_contents">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.dependency} file_get_contents {$Think.lang.exists} <span
+                        class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.dependency} file_get_contents {$Think.lang.not_exists} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$dependency_mb_strlen">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.dependency} mb_strlen {$Think.lang.exists} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.dependency} mb_strlen {$Think.lang.not_exists} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$dependency_curl">
+                <div class="alert alert-success well-sm" role="alert">
+                    {$Think.lang.dependency} curl {$Think.lang.exists} <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <else/>
+                <div class="alert alert-danger well-sm" role="alert">
+                    {$Think.lang.dependency} curl {$Think.lang.not_exists} <span
+                        class="glyphicon glyphicon-remove"></span>
+                </div>
+            </if>
+
+            <if condition="$environment_error eq 0">
+
+                <a class="btn btn-primary btn-md" href="{:U('Install/commonstep2')}">{$Think.lang.next_step}</a>
+
+
+            </if>
+
+
+        </div>
+
+        <div class="footer footer-install">
+            <p>{$Think.lang.contact}</p>
+        </div>
+
+    </div>
+</block>

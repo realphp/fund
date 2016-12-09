@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>管理人员 &gt; 节点列表

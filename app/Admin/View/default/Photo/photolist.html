@@ -1,0 +1,57 @@
+<extend name="Public/frame"/>
+
+
+<block name="content-box">
+    <link rel="stylesheet" href="__ASSERTS__/zyupload/control/css/zyUpload.css" type="text/css">
+    <script type="text/javascript" src="__ASSERTS__/zyupload/core/zyFile.js"></script>
+    <script type="text/javascript" src="__ASSERTS__/zyupload/control/js/zyUpload.js"></script>
+
+    <div id="zyupload" class="zyupload"></div>
+
+
+    <div class="container-fluid photo-box">
+        <div class="row">
+            <foreach name="list" item="v">
+
+                <div class="col-md-2" id="photo_{$v.id}">
+                    <a href="#" class="thumbnail" style="position: relative">
+                        <span class="glyphicon glyphicon-remove" style="position: absolute;top:2px;right: 2px;font-size: 15px;display: none;" onclick="del('{$v.id}')"  ></span>
+                        <img src="{$v.path}" style="height: 200px;">
+                    </a>
+                </div>
+            </foreach>
+
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        var url = "{:U('upload',array('id'=>$_GET['id']))}";
+
+        function del(id){
+            $.ajax({
+                url:"{:U('del')}",
+                type:'post',
+                data:{id:id},
+                success:function(){
+                        $('#photo_'+id).remove();
+                }
+
+            });
+        }
+
+        $(function(){
+            $('.col-md-2').hover(function(){
+                $(this).find('.glyphicon-remove').show();
+            },function(){
+                $(this).find('.glyphicon-remove').hide();
+
+            })
+        });
+
+    </script>
+    <script type="text/javascript" src="__ASSERTS__/zyupload/core/jq22.js"></script>
+
+
+</block>

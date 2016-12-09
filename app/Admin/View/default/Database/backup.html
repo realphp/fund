@@ -1,0 +1,99 @@
+<extend name="Public/frame" />
+<block name="page-sub-nav">
+    <a class="btn btn-default btn-backup" href="#" role="button">{$Think.lang.backup_selected}</a>
+</block>
+<block name="content-box">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><input type="checkbox" value="" class="checkbox tablesall" /></th>
+                <th>{$Think.lang.table}</th>
+                <th>{$Think.lang.record_count}</th>
+                <th>{$Think.lang.operation}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="table_info" item="v">
+                <tr>
+                    <td><input type="checkbox" value="{$v.name}" class="checkbox tables" /></td>
+                    <td>{$v.name}</td>
+                    <td>{$v.count}</td>
+                    <td>
+                        <a href="#" class="btn-repair" data-table="{$v.name}" title="{$Think.lang.repair}"><span class="glyphicon glyphicon-wrench"></span></a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{:U('Database/backup?action=exporttable&table='.$v['name'])}" target="_blank" title="{$Think.lang.export}"><span class="glyphicon glyphicon-save"></span></a>
+                    </td>
+                </tr>
+            </foreach>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+    require(['jquery.extern'],function() {
+        var admin_db_backup = function() {
+            var tables = [];
+            var waiting = null;
+            var table_backup_dir = null;
+            $('input.tables:checked').each(function (i, o) {
+                tables.push($(o).val());
+            });
+            var backup_func = function () {
+                if (table_backup_dir) {
+                    var table = tables.pop();
+                    if (table) {
+                        waiting.content('{$Think.lang.backuping} ' + table);
+                        $.post("{:U('Database/backup?action=backuptable')}",
+                                {table: table, dir: table_backup_dir},
+                                function (data) {
+                                    if (data.status && data.info && data.info == 'OK' && data.status == 1) {
+                                        setTimeout(backup_func, 1000);
+                                    } else {
+                                        $.defaultFormCallback(data);
+                                    }
+                                }
+                        );
+                    } else {
+                        waiting.close();
+                        $.dialog.alert('{$Think.lang.backup_success} data/dbbackup/' + table_backup_dir);
+                    }
+                } else {
+                    waiting.content('{$Think.lang.backup_initing}');
+                    $.post("{:U('Database/backup?action=backup_init')}", {}, function (data) {
+                        if (data.ok && data.dir) {
+                            table_backup_dir = data.dir;
+                            setTimeout(backup_func, 1000);
+                        } else {
+                            $.defaultFormCallback(data);
+                        }
+                    });
+                }
+            };
+            if (tables.length) {
+                waiting = $.dialog.tips(lhgdialog_lang.LOADING, 10000000, 'loading.gif');
+                backup_func();
+            } else {
+                $.dialog.alert('{$Think.lang.no_selected}');
+            }
+            return false;
+        };
+
+        $('.btn-backup').on('click',admin_db_backup);
+        $('input.tablesall').on('change',function(){
+            $('input.tables').prop('checked', $(this).is(':checked'));
+        });
+        $('input.tables').on('change',function(){
+            if(!$(this).is(':checked')){
+                $('input.tablesall').prop('checked',false);
+            }
+        });
+        $('.btn-repair').on('click', function(){
+            var table = $(this).attr('data-table');
+            $.post("{:U('Database/backup?action=repairtable')}", {table: table}, function (data) {
+                $.defaultFormCallback(data);
+            });
+        });
+    });
+    </script>
+
+</block>

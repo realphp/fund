@@ -1,0 +1,1 @@
+var lhgdialog_lang={LOADING:'<span style="line-height:28px;">\u6b63\u5728\u52a0\u8f7d...</span>',UPLOADING:'<span style="line-height:28px;">\u6b63\u5728\u4e0a\u4f20...</span>',TIMEOUT:"\u8bf7\u6c42\u8d85\u65f6"};

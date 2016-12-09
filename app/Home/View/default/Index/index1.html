@@ -1,0 +1,100 @@
+<extend name="Public/frame"/>
+<block name="page_body">
+
+
+    <include file="Public/header" />
+
+    <div id="box-slide">
+
+        <?php $slides = D('Slide','Service')->all(); ?>
+        <div class="container">
+            <div id="box-slide-carousel" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <?php foreach($slides as $i=>&$v){ ?>
+                        <li data-target="#box-slide-carousel" data-slide-to="{$i}" <if condition="$i eq 0">class="active"</if>></li>
+                    <?php } ?>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <?php foreach($slides as $i=>&$v){ ?>
+                    <div class="item <if condition="$i eq 0">active</if>">
+                        <if condition="$v['url']"><a href="{$v.url}" target="_blank"></if>
+                            <?php if($i==0){ ?>
+                                <img src="__ROOT__/{$v.image}" alt="{$v.title|htmlspecialchars}" />
+                            <?php }else{ ?>
+                                <img src="__ROOT__/{$v.image}" alt="{$v.title|htmlspecialchars}" />
+                            <?php } ?>
+                            <div class="carousel-caption">
+                                {$v.title|htmlspecialchars}
+                            </div>
+                        <if condition="$v['url']"></a></if>
+                    </div>
+                    <?php } ?>
+                </div>
+                <a class="left carousel-control" href="#box-slide-carousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#box-slide-carousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+                <div class="box-mod-about">
+                    <h2>
+                        公司介绍
+                    </h2>
+
+                    <div class="about">
+                        <?php echo parse_res_url( tpx_config_get('home_about'), '__ROOT__/',  '__ROOT__/'); ?>
+                    </div>
+                </div>
+
+                <div class="box-mod-category">
+                    <h2>
+                        <a class="right" href="{:U('/Product')}">更多</a>
+                        产品列表
+                    </h2>
+
+                    <div class="row">
+                        <?php foreach(D('Product','Service')->recommend() as $v){ ?>
+                        <div class="col-md-3 col-xs-6">
+                            <div class="item">
+                                <a class="cover" href="{:U('/Product/'.$v['id'])}">
+                                    <img src="__ROOT__/{$v.cover}" alt="{$v.title|htmlspecialchars}" />
+                                </a>
+                                <a class="title" href="{:U('/Product/'.$v['id'])}">{$v.title|htmlspecialchars}</a>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+
+                <include file="Public/news" />
+
+                <include file="Public/qr" />
+
+            </div>
+
+            <include file="Public/partner" />
+
+        </div>
+
+    </div>
+
+
+    <include file="Public/footer" />
+
+
+</block>

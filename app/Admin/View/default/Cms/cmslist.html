@@ -1,0 +1,174 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <table id="table-grid" class="table table-hover">
+        <thead>
+        <tr>
+            <foreach name="fields" item="v" key="k">
+                <if condition="$v">
+                    <if condition="strpos($v['rules'],'searchable')!==false">
+                        <th data-column-id="{$k}" data-sortable="true">
+                            {$v.title}
+                        </th>
+                    <else />
+                        <th data-column-id="{$k}" data-sortable="false">
+                            {$v.title}
+                        </th>
+                    </if>
+                <else />
+                    <th data-column-id="{$k}" data-order="desc" data-type="numeric" data-identifier="true">
+                        {$k|strtoupper}
+                    </th>
+                </if>
+            </foreach>
+            <if condition="access_permit('cmshandle')">
+            <th data-column-id="commands" data-formatter="commands" data-sortable="false">{$Think.lang.operation}</th>
+            </if>
+        </tr>
+        </thead>
+    </table>
+
+    <script type="text/html" id="table-grid-buttons">
+        <div class="btn-group">
+            <if condition="access_permit('cmshandle')">
+                <if condition="$cfg_addable">
+                    <a href="#" data-href="{:U(CONTROLLER_NAME.'/cmshandle?action=add&page=-page-')}" class="btn btn-default btn-xs command-add"><span class="glyphicon glyphicon-plus"></span>{$Think.lang.add}</a>
+                </if>
+                <if condition="$cfg_deletable">
+                    <a href="#" data-href="{:U(CONTROLLER_NAME.'/cmshandle?action=delete&page=-page-')}" class="btn btn-default btn-xs command-delete-all"><span class="glyphicon glyphicon-trash"></span>{$Think.lang.delete}</a>
+                </if>
+            </if>
+        </div>
+    </script>
+
+    <script type="text/html" id="table-grid-row-operation">
+        <if condition="!empty($cfg_record_operation_extra_tpl)">
+            {$cfg_record_operation_extra_tpl}
+        </if>
+        <if condition="!$cfg_all_field_readonly">
+            <a href='#' class='command-edit' title='{$Think.lang.edit}' data-toggle="tooltip" data-placement="top" data-row-id='-row-id-'><span class='glyphicon glyphicon-pencil'></span></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href='#' class='command-delete' title='{$Think.lang.delete}' data-toggle="tooltip" data-placement="top" data-row-id='-row-id-'><span class='glyphicon glyphicon-remove'></span></a>
+        <else />
+            <a href='#' class='command-edit' title='{$Think.lang.edit}' data-toggle="tooltip" data-placement="top" data-row-id='-row-id-'><span class='glyphicon glyphicon-eye-open'></span></a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href='#' class='command-delete' title='{$Think.lang.delete}' data-toggle="tooltip" data-placement="top" data-row-id='-row-id-'><span class='glyphicon glyphicon-remove'></span></a>
+        </if>
+    </script>
+
+    <script type="text/javascript">
+        require(['jquery', 'jquery.extern', 'jquery.bootgrid'],function(){
+            var initialized = false;
+            var buttons = $('#table-grid-buttons').html();
+            var operation = $('#table-grid-row-operation').html();
+            var func_delete = function( ids ) {
+                $.post("{:U(CONTROLLER_NAME.'/cmshandle?action=delete')}", {ids: ids}, function (data) {
+                    if (data.status && data.info && data.info == 'OK' && data.status == 1) {
+                        grid.bootgrid('reload');
+                    } else {
+                        $.defaultFormCallback(data);
+                    }
+                });
+            };
+            var grid = $("#table-grid").bootgrid({
+                    ajax: true,
+                    selection: true,
+                    multiSelect: true,
+                    rowSelect: true,
+                    templates: {
+                        header: '<div id="{{ctx.id}}" class="{{css.header}}"><div class="row"><div class="col-sm-12 actionBar"><p class="{{css.search}}"></p><p class="{{css.actions}}"></p><div class="pull-left">' + buttons + '</div></div></div></div>'
+                    },
+                    labels: {
+                        all: "{$Think.lang.all}",
+                        infos: "{$Think.lang.table_infos}",
+                        loading: "{$Think.lang.loading}",
+                        noResults: "{$Think.lang.no_results}",
+                        refresh: "{$Think.lang.refresh}",
+                        search: "{$Think.lang.search}"
+                    },
+                    url: "{:U(CONTROLLER_NAME.'/cmslist')}",
+                    formatters: {
+                        commands: function(col, row){
+                            return operation.replace(/-row-id-/g,row[this.identifier]);
+                        }
+                    }
+                });
+                grid.on("loaded.rs.jquery.bootgrid", function(){
+
+                    // 编辑
+                    grid.find(".command-edit").on("click", function(e){
+                        var url = "{:U(CONTROLLER_NAME.'/cmshandle?action=edit&id=-id-&page=-page-')}";
+                        var u = window.location.href;
+                        var pos = u.indexOf('#');
+                        var page = 1;
+                        if (pos > 0) {
+                            var current = u.substring(pos + 1);
+                            if (parseInt(current)) {
+                                page = parseInt(current);
+                            }
+                        }
+                        url = url.replace('-page-',page).replace('-id-', $(this).data("row-id"));
+                        $.redirect(url);
+                        return false;
+                    });
+
+                    // 删除
+                    grid.find('.command-delete').on('click', function () {
+                        if(confirm('{$Think.lang.delete}?')) {
+                            var id = $(this).data("row-id");
+                            func_delete(id);
+                        }
+                        return false;
+                    });
+
+                    // Ajax窗口打开
+                    grid.find('.command-dialog-page').on('click', function () {
+                        var url = $(this).attr('data-href');
+                        var title = $(this).attr('data-title');
+                        if(!title){
+                            title = '';
+                        }
+                        var popup_dialog = $.dialog({title:title,content: "url:" + url, width: 800,lock:true});
+                        return false;
+                    });
+
+                    if(!initialized){
+                        initialized = true;
+                        // 添加
+                        $('.command-add').on('click',function(){
+                            var url = $(this).attr('data-href');
+                            var u = window.location.href;
+                            var pos = u.indexOf('#');
+                            var page = 1;
+                            if (pos > 0) {
+                                var current = u.substring(pos + 1);
+                                if (parseInt(current)) {
+                                    page = parseInt(current);
+                                }
+                            }
+                            $.redirect(url.replace('-page-', page));
+                            return false;
+                        });
+                        // 批量删除
+                        $('.command-delete-all').on('click', function(){
+                            var ids = [];
+                            grid.find('input[name=select]:checked').each(function (i, o) {
+                                var id = parseInt($(o).val());
+                                if (id) {
+                                    ids.push(id);
+                                }
+                            });
+                            if (ids.length) {
+                                func_delete( ids.join(',') );
+                            }
+                            return false;
+
+                        });
+                    }
+
+                });
+        });
+
+    </script>
+
+</block>

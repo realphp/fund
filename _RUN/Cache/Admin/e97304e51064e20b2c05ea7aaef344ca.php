@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>系统维护 &gt; 系统安全

@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>文件管理 &gt; 文件列表

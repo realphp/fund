@@ -1,0 +1,66 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{$Think.lang.file}</th>
+            <th>{$Think.lang.filelist}</th>
+            <th>{$Think.lang.filesize}</th>
+            <th>{$Think.lang.operation}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <foreach name="restore_files" item="v">
+            <tr>
+                <td>{$v.name}</td>
+                <td>{$v.filelist|join=###,'<br />'}</td>
+                <td>{$v.size|byte_format}</td>
+                <td>
+                    <a href="#" class="btn-restore" data-dir="{$v.name}" title="{$Think.lang.restore}"><span class="glyphicon glyphicon-repeat"></span></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{:U('Database/restore?action=deletebackup&file='.$v['name'])}" title="{$Think.lang.delete}"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        require(['jquery.extern'],function() {
+            var admin_db_restore = function (dir) {
+                var waiting = $.dialog.tips(lhgdialog_lang.LOADING, 10000000, 'loading.gif');
+
+                var restore_func = function () {
+                    $.post("{:U('Database/restore?action=restorefile')}", {}, function (data) {
+                        if (data.status && data.info && data.status == 1) {
+                            if (data.info == 'OK') {
+                                waiting.close();
+                                $.dialog.alert('{$Think.lang.restore_success}');
+                            } else {
+                                waiting.content(data.info);
+                                setTimeout(restore_func, 1000);
+                            }
+                        } else {
+                            $.defaultFormCallback(data);
+                        }
+                    });
+                };
+
+                waiting.content('{$Think.lang.restore_initing}');
+                $.post("{:U('Database/restore?action=restore_init')}", {dir: dir}, function (data) {
+                    if (data.status && data.info && data.info == 'OK' && data.status == 1) {
+                        setTimeout(restore_func, 1000);
+                    } else {
+                        $.defaultFormCallback(data);
+                    }
+                });
+                return false;
+            };
+            $('.btn-restore').on('click',function(){
+                admin_db_restore($(this).attr('data-dir'));
+            })
+        });
+    </script>
+
+</block>

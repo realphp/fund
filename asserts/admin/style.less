@@ -1,0 +1,225 @@
+@blue : #008cba;
+
+body {
+  background: rgb(235, 235, 235);
+  font-size: 13px;
+}
+
+a {
+  &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+
+.btn {
+  padding: 5px 10px;
+}
+
+.btn-xs {
+  padding: 2px 5px;
+}
+
+.header .navbar-header {
+  width: 150px;
+}
+
+.header .navbar-header .navbar-brand {
+  font-size: 18px;
+}
+
+.footer {
+  padding: 0 20px;
+  line-height: 45px;
+  margin: 0;
+  color: #FFF;
+  background: #f5f5f5;
+  color: #666;
+}
+
+.footer-install {
+  color: #666;
+}
+
+#frame-menu {
+  width: 150px;
+  position: absolute;
+  top: 45px;
+  left: 0px;
+  overflow: auto;
+  background: #F2F2F2;
+  border-right: 2px solid @blue;
+  .top-btns {
+    height: 41px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgb(229, 229, 229);
+    overflow: hidden;
+    a {
+      display: block;
+      height: 31px;
+      line-height: 31px;
+      width: 25%;
+      background: #FFF;
+      text-align: center;
+      color: @blue;
+      float: left;
+      border: 2px solid #F2F2F2;
+      border-top: none;
+      border-bottom: none;
+      &:hover {
+        background: #F8F8F8;
+      }
+    }
+  }
+  .m-1 {
+    display: block;
+    height: 45px;
+    line-height: 45px;
+    text-decoration: none;
+    color: #585858;
+    padding-left: 10px;
+    border-top: 1px solid #fcfcfc;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 14px;
+    background: #f9f9f9;
+  }
+
+  .m-1-show {
+    color: @blue;
+  }
+
+  .m-2-box {
+    padding: 5px 0;
+    display: none;
+  }
+
+  .m-2-box-show {
+    display: block;
+  }
+
+  .m-2 {
+    padding-left: 20px;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    line-height: 30px;
+    &:hover {
+      color: #666;
+    }
+  }
+
+  .m-2-show {
+    color: @blue;
+  }
+
+  .m-3-box {
+    display: none;
+    padding: 5px 0;
+  }
+
+  .m-3-box-show {
+    display: block;
+  }
+
+  .m-3 {
+    display: block;
+    padding-left: 30px;
+    color: #333;
+    text-decoration: none;
+    line-height: 30px;
+    &:hover {
+      color: #007196;
+    }
+  }
+
+  .m-3-show {
+    color: #007196;
+    font-weight: bold;
+    background: #FFF;
+    //border: 1px solid #CCC;
+    border: none;
+    border-right: 5px solid @blue;
+  }
+
+}
+
+#frame-content {
+  margin-top: -20px;
+  margin-left: 150px;
+  background: #FFF;
+}
+
+#page-title-bar {
+  background: rgb(245, 245, 245);
+  height: 40px;
+  padding: 10px;
+  line-height: 20px;
+  border-bottom: 1px solid rgb(229, 229, 229);
+  color: rgb(57, 57, 57);
+  font-size: 13px;
+  .title {
+    color: @blue;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  button, a {
+    height: 20px;
+    line-height: 20px;
+    font-size: 13px;
+    padding: 0 5px;
+    margin: 0 10px 0 0;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    color: @blue;
+    border: 1px solid @blue;
+    background: #FFF;
+    &:hover {
+      background: #EEE;
+      text-decoration: none;
+    }
+    &:hover, &:linked {
+      text-decoration: none;
+    }
+  }
+}
+
+#page-content {
+  padding: 10px;
+}
+
+form {
+  padding: 5px;
+  .control-label {
+    text-align: right;
+  }
+  .form-line {
+    padding: 10px 0;
+    input {
+      width: auto;
+    }
+  }
+  .form-inline {
+    width: auto;
+    display: inline;
+  }
+}
+
+.text-disable {
+  color: #CCC;
+}
+
+.text-gray {
+  color: #999;
+}
+
+.breadcrumb {
+  font-size: 13px;
+}
+
+.bootgrid-table {
+  table-layout: auto !important;
+}
+
+.bootgrid-header {
+  margin: 0 !important;
+}

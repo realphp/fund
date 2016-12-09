@@ -1,0 +1,41 @@
+<extend name="Public/frame" />
+<block name="content-box">
+
+    <form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U(CONTROLLER_NAME.'/'.ACTION_NAME)}" method="post">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">统计代码显示位置</label>
+            <div class="col-sm-9">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="code_counter_position" value="1" <if condition="$code_counter_position">checked</if> /> body
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="code_counter_position" value="0" <if condition="!$code_counter_position">checked</if> /> head
+                    </label>
+                </div>
+                <div class="help-block">统计代码显示的未知，head表示显示在head中，body表示显示在body中</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">访问统计</label>
+            <div class="col-sm-9">
+                        <textarea name="code_counter"
+                                  class="form-control"
+                                  placeholder=""
+                                  style="min-height:6em;">{$code_counter|t_html}</textarea>
+                <div class="help-block">该段代码将会被添加在head中</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">{$Think.lang.submit}</button>
+            </div>
+        </div>
+
+    </form>
+
+</block>

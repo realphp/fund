@@ -1,0 +1,555 @@
+body {
+    font: 12px/14px "微软雅黑", "宋体", Segoe UI, Arial, sans-serif, serif;
+    color: #686868;
+}
+
+body, h1, h2, h3, ul, p, figure {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+ul {
+    list-style: outside none none;
+}
+
+a, a:hover,a:visited {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1000px;
+}
+
+/*首页面*/
+
+@media (min-width: 970px) {
+    body {
+        background: #f8f8f8;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    header {
+        border-bottom: 3px solid #F39700;
+        line-height: 50px;
+        background: #fff;
+    }
+
+    .header-nav {
+        height: 51px;
+    }
+
+    .container, .row {
+        background: #fff;
+        margin: 0px auto;
+        padding: 0px;
+    }
+
+    .navbar-header {
+        width: 300px;
+    }
+
+    .box-slide {
+        height: 300px;
+    }
+
+    .carousel-inner {
+        height: 300px;
+    }
+}
+
+.navbar .navbar-toggle .icon-bar {
+    background-color: #000;
+}
+
+.navbar-nav > li {
+    height: 40px;
+}
+
+.navbar-nav > li > a {
+    font-size: 16px;
+    line-height: 65px;
+    padding: 0 1em;
+    height: 52px;
+    color: #000;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    border-bottom: 2px solid #F39700;
+    background-color: #fff;
+    color: #F39700;
+}
+
+.navbar-nav > li > .active {
+    border-bottom: 2px solid #F39700;
+    background-color: #fff;
+    color: #F39700;
+}
+
+.navbar-header > a {
+    color: #000;
+}
+
+.carousel-control.right, .carousel-control.left {
+    background-image: none;
+}
+
+.panel h2 {
+    color: #fff;
+    font-weight: bold;
+    line-height: 30px;
+    padding: 0 1em;
+    background: #F39700;
+    font-size: 15px;
+}
+
+.newCon {
+    border: 1px solid #eaeaea;
+    background-color: #fff;
+}
+
+.newCon_pic {
+    padding: 18px 9px 14px 9px;
+    border-bottom: 1px dotted #cbcbcb;
+}
+
+.newCon_pic_info {
+    float: right;
+    width: 225px;
+}
+
+.newCon_pic_info strong {
+    display: block;
+    width: 225px;
+    height: 25px;
+    overflow: hidden;
+}
+
+.newCon_pic_info strong a {
+    color: #F39700;
+}
+
+.newCon_pic_info p {
+    line-height: 20px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.content {
+    padding-top: 25px;
+}
+
+.newList {
+    padding-left: 9px;
+    padding-bottom: 8px;
+}
+
+.newList li {
+    height: 20px;
+    line-height: 20px;
+    margin-top: 7px;
+}
+
+.newList li a {
+    color: #686868;
+    float: left;
+    width: 268px;
+    height: 20px;
+    overflow: hidden;
+    display: block;
+}
+
+.newList li span {
+    width: 70px;
+    float: right;
+}
+
+.boxMore {
+    background-color: #e9e9e9;
+    border: 1px solid #dcdbdc;
+    border-top: none;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 12px 0 10px;
+}
+
+.boxMore .more {
+    float: right;
+    margin-top: 2px;
+    color: #999;
+}
+
+.photo {
+    border: 1px solid #dcdbdc;
+    border-top: none;
+    text-align: center;
+}
+
+.photo img {
+    width: 180px;
+    height: 120px;
+    text-align: center;
+    margin: 13px auto;
+
+}
+
+.donate a {
+
+    margin: 8px auto;
+}
+
+.org-btn {
+    display: block;
+    width: 120px;
+    height: 32px;
+    color: #FFF;
+    font-weight: bold;
+    line-height: 32px;
+    font-size: 14px;
+    background: #F39700;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 1px;
+}
+
+footer {
+    background: #F39700;
+}
+
+footer .container {
+    background: #F39700;
+}
+
+.footerBtn {
+    text-align: center;
+    color: #fff;
+    padding-top: 18px;
+}
+
+.footerBtn a {
+    margin: 0 10px;
+}
+.footerBtn a:hover, .footerBtn a:focus{
+    color: #fff;
+    font-weight:bold;
+}
+
+.footerInfo {
+    margin: 10px 0px 10px 0px;
+    text-align: center;
+    color: #fff;
+}
+
+/*横向轮播滚动*/
+img {
+    border: none;
+}
+
+a {
+    color: #fff;
+}
+
+.org-btn:hover,.org-btn:focus {
+    font-weight: bolder;
+    color: #fff;
+}
+
+.boxbox {
+    width: 980px;
+    margin: 15px auto;
+    position: relative;
+    overflow: hidden;
+    _height: 100%;
+}
+
+.picbox {
+    width: 980px;
+    height: 140px;
+    overflow: hidden;
+    position: relative;
+}
+
+.piclist {
+    height: 115px;
+    position: absolute;
+    left: 0px;
+    top: 0px
+}
+
+.piclist li {
+    background: #eee;
+    margin-right: 20px;
+    padding: 5px;
+    float: left;
+}
+
+.piclist li img {
+    width: 220px;
+    height: 130px;
+}
+
+.swaplist {
+    position: absolute;
+    left: -3000px;
+    top: 0px
+}
+
+.og_prev, .og_next {
+    width: 30px;
+    height: 50px;
+    background: url(../image/icon.png) no-repeat;
+    background: url(../image/icon_ie6.png) no-repeat \9;
+    position: absolute;
+    top: 45px;
+    z-index: 99;
+    cursor: pointer;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+}
+
+.og_prev {
+    background-position: 0 -60px;
+    left: 4px;
+}
+
+.og_next {
+    background-position: 0 0;
+    right: 4px;
+}
+
+/*关于我们页面*/
+.about-left {
+    background: #efefef;
+    min-height: 860px;
+}
+
+.about-title {
+    margin-top: 60px;
+    position: relative;
+}
+
+.about-left .about-title h3 {
+    background: #F39700;
+    font-size: 15px;
+    color: #fff;
+    font-weight: bold;
+    text-align: right;
+    padding: 10px 20px 10px 0px;
+
+}
+
+.about-title em {
+    background: url("../image/corner.png") no-repeat left center;
+    position: absolute;
+    top: 36px;
+    height: 4px;
+    width: 7px;
+    right: 0px;
+}
+
+.about-left .about-title h4 {
+    font-size: 15px;
+    padding: 3px 20px 0px 0px;
+    text-align: right;
+}
+
+.about-title a {
+    color: #777576;
+
+}
+
+.about-left .about-title h4 a:hover {
+    text-decoration: none;
+    font-weight: bolder;
+    color: #000;
+}
+
+.about-left .active2 {
+    text-decoration: none;
+    font-weight: bolder;
+    color: #000
+}
+
+.left-donate {
+    margin-top: 70px;
+}
+
+.left-donate a {
+    margin: 8px auto;
+}
+
+.about-desc {
+    padding: 60px 60px 0px 30px;
+}
+
+.about-desc h2 {
+    font-size: 15px;
+    border-left: 2px solid #F39700;
+    padding-left: 10px;
+    color: #F39700;
+    font-weight: bolder;
+}
+
+.about-desc hr {
+    margin-top: 8px;
+    margin-bottom: 45px;
+    border-top: 1px solid #f6f6f6;
+}
+
+.about-desc p {
+    /*text-indent: 2em;*/
+    line-height: 2;
+    font-size: 13px;
+}
+
+/*新闻列表页面*/
+.about-desc .page-list .item {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f6f6f6;
+    position: relative;
+}
+
+.about-desc .page-list .item p {
+    /*height: 13px;*/
+    margin-bottom: 7px;
+}
+
+.about-desc .page-list .item p a {
+    color: #656160;
+    position: absolute;
+    bottom: 7px;
+    right: 0px;
+
+}
+
+.about-desc .page-list .title {
+    margin-bottom: 15px;
+
+}
+
+.about-desc .page-list .title a {
+    color: #F39700;
+    font-size: 13px;
+}
+
+.about-desc .page-list .cover {
+    display: inline-block;
+}
+
+.about-desc .page-list .item .cover a {
+    display: block;
+    border: 1px solid #EEE;
+}
+
+.about-desc .page-list .cover img {
+    width: 112px;
+    height: 83px;
+}
+
+.about-desc .page-list .summary {
+    display: inline-block;
+    width: 567px;
+    padding-left: 20px;
+    padding-top: 17px;
+    line-height: 18px;
+    color: #656160;
+    vertical-align: top;
+}
+
+.about-desc .page-list .pagination a {
+    display: inline-block;
+    padding: 5px 7px;
+    color: #888888;
+}
+
+.pagination {
+    float: right;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 5px 7px;
+}
+
+.pagination .num, .next, .prev {
+    color: #000;
+}
+
+.pagination .current {
+    padding: 5px 7px;
+}
+
+/*新闻详细页面*/
+.box-page-main h1 {
+    text-align: center;
+    color: #F39700;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.box-page-main .attr {
+    margin-top: 10px;
+    text-align: center;
+
+}
+
+.box-page-main  .main{
+    margin-top: 40px;
+}
+
+.box-page-main .main p {
+    line-height: 2em;
+}
+
+/*我们在行动列表页面*/
+
+.article-list .item{
+    width: 100%;
+    height: 38px;
+    padding: 12px;
+    border-bottom: 1px dashed #a1a1a1;
+}
+.article-list .title{
+    float: left;
+}
+
+.article-list .time{
+    float: right;
+    color: #c0c0c0;
+}
+.article-list .title  a{
+    color: #636162;
+}
+
+
+/*相片页面*/
+
+
+.gallery img {
+    height: 100%;
+
+}
+
+.gallery a {
+    width: 215px;
+    height: 156px;
+    display: inline-block;
+    margin: 0px 25px 25px 15px;
+}
+
+.baguetteBoxOne {
+    width:805px;
+}
+
+
+
+/*公益伙伴页面*/
+.partnerBg li {
+    width: 246px;
+    height: 85px;
+    line-height: 85px;
+    vertical-align: middle;
+    text-align: center;
+    float: left;
+}

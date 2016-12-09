@@ -1,0 +1,165 @@
+<extend name="Public/frame"/>
+
+<block name="content-box">
+
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">{$Think.lang.install} [ {$Think.lang.install_info} ]</h3>
+        </div>
+
+
+        <div class="well">
+
+            <form class="form-horizontal tpx-ajaxsubmit" role="form" action="{:U('Install/commonstep3')}" method="post">
+
+                <legend class="">{$Think.lang.db}</legend>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_type}</label>
+
+                    <div class="col-sm-10">
+                        <select name="db_type" class="form-control" style="width:auto;">
+                            <option value="mysql">MySQL</option>
+                        </select>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_host}</label>
+
+                    <div class="col-sm-10">
+                        <input name="db_host" type="text" class="form-control" placeholder="" required="required"
+                               value="localhost" style="width:20em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_port}</label>
+
+                    <div class="col-sm-10">
+                        <input name="db_port" type="text" class="form-control" placeholder="" required="required"
+                               value="3306" style="width:10em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_name}</label>
+
+                    <div class="col-sm-10">
+                        <input name="db_name" type="text" class="form-control" placeholder="" required="required"
+                               value="tpx" style="width:20em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_user}</label>
+
+                    <div class="col-sm-10">
+                        <input name="db_user" type="text" class="form-control" placeholder="" required="required"
+                               value="root" style="width:20em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_pwd}</label>
+
+                    <div class="col-sm-10">
+                        <input name="db_pwd" type="text" class="form-control" placeholder="" value=""
+                               style="width:20em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.db_prefix}</label>
+
+                    <div class="col-sm-10">
+                        <input name="db_prefix" type="text" class="form-control" placeholder="" required="required"
+                               value="tpx_" style="width:10em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-default" onclick="db_test();">{$Think.lang.db_test}
+                        </button>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    function db_test() {
+                        $.post("{:U('Install/dbtest')}", {
+                            db_type: $('select[name=db_type]').val(),
+                            db_host: $('input[name=db_host]').val(),
+                            db_port: $('input[name=db_port]').val(),
+                            db_name: $('input[name=db_name]').val(),
+                            db_user: $('input[name=db_user]').val(),
+                            db_pwd: $('input[name=db_pwd]').val(),
+                            db_prefix: $('input[name=db_prefix]').val(),
+                        }, $.defaultFormCallback);
+                    }
+                </script>
+
+                <legend class="">网站信息</legend>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">绑定域名/IP</label>
+
+                    <div class="col-sm-10">
+                        <input name="admin_domain" type="text" class="form-control" placeholder="" required="required"
+                               value="{$Think.const.HTTP_HOST}" style="width:20em;"/>
+
+                        <div class="help-block">不包含http://和任何斜杠，例如：www.tecmz.com</div>
+                    </div>
+                </div>
+
+
+                <legend class="">{$Think.lang.admin}</legend>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.admin_username}</label>
+
+                    <div class="col-sm-10">
+                        <input name="admin_username" type="text" class="form-control" placeholder="" required="required"
+                               value="" style="width:20em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{$Think.lang.admin_password}</label>
+
+                    <div class="col-sm-10">
+                        <input name="admin_password" type="text" class="form-control" placeholder="" required="required"
+                               value="" style="width:20em;"/>
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary btn-md">{$Think.lang.submit}</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+
+        <div class="footer footer-install">
+            <p>{$Think.lang.contact}</p>
+        </div>
+
+    </div>
+
+</block>

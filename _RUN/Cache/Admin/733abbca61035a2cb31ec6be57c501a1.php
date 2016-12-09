@@ -1,0 +1,1 @@
+<?php if (!defined('THINK_PATH')) exit();?>公益伙伴 &gt; 伙伴列表

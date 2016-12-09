@@ -1,0 +1,29 @@
+<extend name="Public/frame"/>
+
+<block name="content-box">
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">{$Think.lang.install} [ {$Think.lang.choose_mode} ]</h3>
+        </div>
+
+
+        <div class="well">
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-3">
+                    <a class="btn btn-primary btn-lg btn-block" href="{:U('Install/commonstep1')}">{$Think.lang.mode_common}</a>
+                </div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-3">
+                    <a class="btn btn-primary btn-lg btn-block disabled">{$Think.lang.mode_sea}</a>
+                </div>
+                <div class="col-xs-2"></div>
+            </div>
+        </div>
+
+        <div class="footer footer-install">
+            <p>{$Think.lang.contact}</p>
+        </div>
+
+    </div>
+</block>
